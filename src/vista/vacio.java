@@ -1,10 +1,17 @@
 package vista;
 
+import controllers.ControllerApiMusic;
+
 public class vacio {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("hola mundo");
+		
+		ControllerApiMusic p = new ControllerApiMusic();
+		
+		p.conexion();
+		p.imprimir();
+//		p.fechs();
+		
 	}
-
+	
 }
