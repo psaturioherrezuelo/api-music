@@ -10,7 +10,6 @@ public class vacio {
 		
 		p.conexion();
 		p.imprimir();
-//		p.fechs();
 		
 	}
 	
