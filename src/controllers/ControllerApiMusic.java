@@ -2,17 +2,16 @@ package controllers;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import com.mysql.cj.result.LocalDateTimeValueFactory;
-import com.mysql.cj.xdevapi.Statement;
-
 import models.Artista;
 import models.Cancion;
 import models.Discografica;
+import models.Usuario;
 
 public class ControllerApiMusic {
 	
@@ -118,6 +117,93 @@ public class ControllerApiMusic {
 			
 			listaDiscograficas.add(new Discografica(id, nombre, visualizaciones, tcanciones));
 			
+		}
+		
+	}
+	
+	public boolean login (String user, String passw) {
+		
+		boolean cnd = false;
+		
+		String consulta = "select * from usuarios where usuario='" + user + "';";
+
+		try {
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			conn=DriverManager.getConnection(url, usuario, password);
+			
+			stmt = conn.createStatement();
+			
+			rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+			
+			while(rs.next()) {
+				
+				if(rs.getString("usuario").equalsIgnoreCase(user)) {
+					
+					if(rs.getString("password").equals(passw)) {
+						
+						cnd = true;
+						
+					} else {
+						
+						cnd = false;
+						
+					}
+					
+				} else {
+					
+					cnd = false;
+					
+				}
+				
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return cnd;
+		
+	}
+	
+	public void register(String user, String passw) {
+		
+		PreparedStatement str = null;
+		
+		try {
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			conn=DriverManager.getConnection(url, usuario, password);
+			conn.setAutoCommit(false);
+			
+//			stmt = conn.createStatement();
+//			
+//			String consulta = "INSERT INTO usuarios VALUES ('" + user + "',AES_ENCRYPT('" + passw + "','api'));";
+//			rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+			
+			
+			str = conn.prepareStatement("INSERT INTO usuarios VALUES (?,?);");
+//			str = conn.prepareStatement("INSERT INTO usuarios VALUES (?,AES_ENCRYPT(?,'api'));");
+
+//			passw = (AES);							
+			str.setString(1, user);
+			str.setString(2, passw);
+			
+		
+			
+			str.executeUpdate();
+			conn.commit();
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		
 	}

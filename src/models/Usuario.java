@@ -13,11 +13,11 @@ public class Usuario {
 
 	}
 	
-	public Usuario(String user, String password, Boolean admin) {
+	public Usuario(String user, String password) {
 		
 		this.user = user;
 		this.password = password;
-		this.admin = admin;
+		admin = false;
 		
 	}
 
