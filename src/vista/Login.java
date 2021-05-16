@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
@@ -173,14 +175,35 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 			
 		} else if (e.getSource() == btnIniciar) {
 			
-			boolean cnd = controlador.login(textUser.getText(),textPassword.getText());
-			
 //			boolean cnd = false;
 			
-			if(cnd==true) {
-				System.out.println("bien");
-			}else {
-				System.out.println("mal");
+			if(textUser.getText().isEmpty()) {
+				
+				JOptionPane.showMessageDialog(null, "¡El usuario esta vacio!", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} else if(textPassword.getText().isEmpty()) {
+				 
+				JOptionPane.showMessageDialog(null, "¡La contraseña esta vacia!", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} else {
+				
+				boolean cnd = controlador.login(textUser.getText(),textPassword.getText());
+				
+				if(cnd==true) {
+					
+//					JOptionPane.showMessageDialog(null, "Inicio de sesion correcto.");
+					JOptionPane.showMessageDialog(null, "Bienvenido", "Inicio de sesion correcto", JOptionPane.YES_OPTION);
+					this.dispose();
+					Register r = new Register();
+					r.setVisible(true);
+					
+					
+				}else {
+					
+					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				}
+				
 			}
 			
 		} else if (e.getSource() == btnSalir) {
