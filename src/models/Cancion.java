@@ -11,6 +11,18 @@ public class Cancion {
 	private float precio;
 	private boolean explicito;
 	
+	public Cancion(int id, String titulo, String genero, LocalDate lanzamiento, long visualizaciones, float precio, boolean explicito) {
+		
+		this.id = id;
+		this.titulo = titulo;
+		this.genero = genero;
+		this.lanzamiento = lanzamiento;
+		this.visualizaciones = visualizaciones;
+		this.precio = precio;
+		this.explicito = explicito;
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -52,6 +64,24 @@ public class Cancion {
 	}
 	public void setExplicito(boolean explicito) {
 		this.explicito = explicito;
+	}
+
+	@Override
+	public String toString() {
+		
+		String expl;
+		
+		if(explicito==true) {
+			expl = "Si";
+		} else {
+			expl = "No";
+		}
+		
+		return "Cancion: " + id + ". - " + titulo + "\n"
+				+ "Genero: " + genero + "\n"
+				+ "Lanzamiento: " + lanzamiento + "\n"
+				+ "Visualizaciones: " + visualizaciones + "\n"
+				+ "Precio=" + precio + ", Explicito " + expl;
 	}
 	
 }
