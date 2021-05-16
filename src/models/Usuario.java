@@ -1,14 +1,22 @@
 package models;
 
+import java.time.LocalDate;
+
 public class Usuario {
 
-	private String user, password;
+	private String user, password, nombre, apellidos, email, direccion;
+	LocalDate fregistro;
 	private boolean admin;
 	
 	public Usuario() {
 		
-		user = null;
-		password = null;
+		user = "";
+		password = "";
+		nombre = "";
+		apellidos = "";
+		email = "";
+		direccion = "";
+		fregistro = LocalDate.now();
 		admin = false;
 
 	}
@@ -17,8 +25,27 @@ public class Usuario {
 		
 		this.user = user;
 		this.password = password;
+		nombre = "";
+		apellidos = "";
+		email = "";
+		direccion = "";
+		fregistro = LocalDate.now();
 		admin = false;
 		
+	}
+	
+	
+
+	public Usuario(String user, String password, String nombre, String apellidos, String email, String direccion) {
+		
+		this.user = user;
+		this.password = password;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.email = email;
+		this.direccion = direccion;
+		fregistro = LocalDate.now();
+		admin = false;
 	}
 
 	public String getUser() {

@@ -10,14 +10,15 @@ import java.util.ArrayList;
 
 import models.Artista;
 import models.Cancion;
+import models.Ceo;
 import models.Discografica;
-import models.Usuario;
 
 public class ControllerApiMusic {
 	
 	private ArrayList<Artista> listaArtistas = new ArrayList<Artista>();
 	private ArrayList<Cancion> listaCanciones = new ArrayList<Cancion>();
 	private ArrayList<Discografica> listaDiscograficas = new ArrayList<Discografica>();
+	private ArrayList<Ceo> listaCeos = new ArrayList<Ceo>();
 	
 	private String bd = "apimusic", url = "jdbc:mysql://localhost:3306/" + bd, usuario = "root", password = ""; 
 	
@@ -38,6 +39,7 @@ public class ControllerApiMusic {
 			leerCanciones();
 			leerArtistas();
 			leerDiscograficas();
+			leerCeos();
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -46,7 +48,7 @@ public class ControllerApiMusic {
 		}
 	
 	}
-	
+
 	private void leerCanciones() throws SQLException {
 		
 		String consulta = "select * from canciones;";
@@ -121,6 +123,26 @@ public class ControllerApiMusic {
 		
 	}
 	
+	private void leerCeos() throws SQLException {
+
+		int id, idDiscografica;
+		String nombre;
+		
+		String consulta = "select * from ceos;";
+		rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+		
+		while(rs.next()) {
+			
+			id = rs.getInt("id_ceo");
+			nombre = rs.getString("ceo");
+			idDiscografica = rs.getInt("id_discografica");
+			
+			listaCeos.add(new Ceo(id,nombre,idDiscografica));
+			
+		}
+	}
+
+	
 	public boolean login (String user, String passw) {
 		
 		boolean cnd = false;
@@ -188,13 +210,14 @@ public class ControllerApiMusic {
 //			rs = ((java.sql.Statement) stmt).executeQuery(consulta);
 			
 			
-			str = conn.prepareStatement("INSERT INTO usuarios VALUES (?,?);");
+			str = conn.prepareStatement("INSERT INTO usuarios (usuario,password,email,fregistro) VALUES (?,?,'prueba@prueba.es',?);");
 //			str = conn.prepareStatement("INSERT INTO usuarios VALUES (?,AES_ENCRYPT(?,'api'));");
 
-//			passw = (AES);							
+//			passw = (AES);	
+			
 			str.setString(1, user);
 			str.setString(2, passw);
-			
+			str.setString(3, LocalDate.now().toString());
 		
 			
 			str.executeUpdate();
@@ -229,6 +252,14 @@ public class ControllerApiMusic {
 		for(Discografica d : listaDiscograficas) {
 			
 			System.out.println(d + "\n");
+			
+		}
+		
+		System.out.println("\n\n\n");
+		
+		for (Ceo ceo : listaCeos) {
+			
+			System.out.println(ceo + "\n");
 			
 		}
 		
