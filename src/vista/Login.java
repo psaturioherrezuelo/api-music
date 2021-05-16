@@ -20,6 +20,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
@@ -33,6 +34,8 @@ import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
 
 public class Login extends JFrame implements WindowListener, ActionListener, MouseListener {
 
@@ -71,8 +74,9 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 	 * Create the frame.
 	 */
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/logo-icon-64px.png")));
 		setResizable(false);
-		setTitle("Api Music - Login");
+		setTitle("Login Api Music");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 450);
@@ -122,8 +126,15 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		btnSalir.addActionListener(this);
 		contentPane.add(btnSalir);
 		
-		controlador.conexion();
-		controlador.imprimir();
+		JLabel lblImgLogo = new JLabel("");
+		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource("/img/logotipo-letter.png")));
+		lblImgLogo.setBounds(337, 21, 413, 322);
+		contentPane.add(lblImgLogo);
+		
+		this.setLocationRelativeTo(null); //REVISAR PARA NO CARGAR EL PROGRAMA 200 VECES
+		
+//		controlador.conexion();
+//		controlador.imprimir();
 		
 	}
 
@@ -167,6 +178,9 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 				Register dialog = new Register();
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);
+				dialog.setLocationRelativeTo(null);
+				
+				this.setVisible(false);
 			
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -197,6 +211,8 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 					this.dispose();
 					Register r = new Register();
 					r.setVisible(true);
+					controlador.conexion();
+					controlador.imprimir();
 					
 					
 				}else {
@@ -212,8 +228,6 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 			System.exit(0);
 			
 		} 
-		
-		System.out.println(e.getActionCommand());
 		
 	}
 
@@ -258,23 +272,4 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		// TODO Auto-generated method stub
 		
 	}
-
-//	public boolean isCnd() {
-//		return cnd;
-//	}
-//
-//	public void setCnd(boolean cnd) {
-//		this.cnd = cnd;
-//	}
-//	
-//	public String us() {
-//		
-//		String us = txtUser.getText();
-//		
-//		return us;
-//		
-//	}
-	
-	
-	
 }
