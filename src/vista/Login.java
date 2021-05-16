@@ -124,6 +124,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		
 		controlador.conexion();
 		controlador.imprimir();
+		
 	}
 
 	@Override

@@ -53,6 +53,10 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	 * Create the dialog.
 	 */
 	public Register() {
+		
+		setResizable(false);
+		setTitle("Api Music - Register");
+		
 		setBounds(100, 100, 450, 435);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
