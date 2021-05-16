@@ -1,9 +1,14 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.time.LocalDate;
 
 import javax.swing.JButton;
@@ -15,8 +20,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 
-public class Register extends JDialog implements ActionListener {
+public class Register extends JDialog implements WindowListener, ActionListener, MouseListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnReg, btnCancel;
@@ -32,6 +38,7 @@ public class Register extends JDialog implements ActionListener {
 	private JTextField textApellidos;
 	private JLabel lblEmail;
 	private JTextField textEmail;
+	private JLabel lblLogoImg;
 	/**
 	 * Launch the application.
 	 */
@@ -49,8 +56,13 @@ public class Register extends JDialog implements ActionListener {
 	 * Create the dialog.
 	 */
 	public Register() {
+		
+		setResizable(false);
+		setTitle("Api Music - Register");
+		
 		setBounds(100, 100, 450, 435);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBackground(new Color(85, 100, 235));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
@@ -81,7 +93,7 @@ public class Register extends JDialog implements ActionListener {
 		{
 			lblDireccion = new JLabel("Direccion");
 			lblDireccion.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDireccion.setBounds(82, 237, 46, 14);
+			lblDireccion.setBounds(72, 237, 60, 14);
 			contentPanel.add(lblDireccion);
 		}
 		{
@@ -105,7 +117,7 @@ public class Register extends JDialog implements ActionListener {
 		{
 			lblApellidos = new JLabel("Apellidos");
 			lblApellidos.setHorizontalAlignment(SwingConstants.CENTER);
-			lblApellidos.setBounds(82, 181, 46, 14);
+			lblApellidos.setBounds(72, 181, 60, 14);
 			contentPanel.add(lblApellidos);
 		}
 		{
@@ -127,12 +139,20 @@ public class Register extends JDialog implements ActionListener {
 			contentPanel.add(textEmail);
 		}
 		{
+			lblLogoImg = new JLabel("");
+			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource("/img/logotipo-letter.png")));
+			lblLogoImg.setBounds(82, 106, 480, 176);
+			contentPanel.add(lblLogoImg);
+		}
+		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			buttonPane.setBackground(new Color(85, 100, 235));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnReg = new JButton("Registrarse");
 				btnReg.setActionCommand("Registrar");
+				btnReg.addActionListener(this);
 				buttonPane.add(btnReg);
 				getRootPane().setDefaultButton(btnReg);
 			}
@@ -140,8 +160,6 @@ public class Register extends JDialog implements ActionListener {
 				btnCancel = new JButton("Cancelar");
 				btnCancel.setActionCommand("Cancelar");
 				btnCancel.addActionListener(this);
-				buttonPane.add(btnCancel);
-				
 				buttonPane.add(btnCancel);
 			}
 		}
@@ -179,7 +197,9 @@ public class Register extends JDialog implements ActionListener {
 			
 		} else if(e.getSource() == btnCancel) {
 			
+			this.setVisible(false);
 			dispose();
+			new Login().setVisible(true);
 			
 		}
 		
@@ -191,6 +211,78 @@ public class Register extends JDialog implements ActionListener {
 		
 		
 		return a;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

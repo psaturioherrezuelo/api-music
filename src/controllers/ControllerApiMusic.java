@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import models.Artista;
 import models.Cancion;
 import models.Ceo;
+import models.Contrato;
 import models.Discografica;
+import models.Lanzamiento;
 
 public class ControllerApiMusic {
 	
@@ -19,6 +21,9 @@ public class ControllerApiMusic {
 	private ArrayList<Cancion> listaCanciones = new ArrayList<Cancion>();
 	private ArrayList<Discografica> listaDiscograficas = new ArrayList<Discografica>();
 	private ArrayList<Ceo> listaCeos = new ArrayList<Ceo>();
+	
+	private ArrayList<Contrato> listaContratos = new ArrayList<Contrato>();
+	private ArrayList<Lanzamiento> listaLanzamientos = new ArrayList<Lanzamiento>();
 	
 	private String bd = "apimusic", url = "jdbc:mysql://localhost:3306/" + bd, usuario = "root", password = ""; 
 	
@@ -40,6 +45,8 @@ public class ControllerApiMusic {
 			leerArtistas();
 			leerDiscograficas();
 			leerCeos();
+			leerContratos();
+			leerLanzamientos();
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -51,7 +58,7 @@ public class ControllerApiMusic {
 
 	private void leerCanciones() throws SQLException {
 		
-		String consulta = "select * from canciones;";
+		String consulta = "canciones";
 		
 		int id;
 		String titulo, genero,parse;
@@ -60,7 +67,7 @@ public class ControllerApiMusic {
 		float precio;
 		boolean explicito;
 		
-		rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+		rs = rs(consulta);
 		
 		while(rs.next()) {
 			
@@ -85,8 +92,8 @@ public class ControllerApiMusic {
 		String nombre;
 		long visualizaciones;
 		
-		String consulta = "select * from artistas;";
-		rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+		String consulta = "artistas";
+		rs = rs(consulta);
 		
 		while(rs.next()) {
 		
@@ -107,8 +114,8 @@ public class ControllerApiMusic {
 		String nombre;
 		long visualizaciones;
 		
-		String consulta = "select * from discograficas;";
-		rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+		String consulta = "discograficas";
+		rs = rs(consulta);
 		
 		while(rs.next()) {
 			
@@ -128,8 +135,8 @@ public class ControllerApiMusic {
 		int id, idDiscografica;
 		String nombre;
 		
-		String consulta = "select * from ceos;";
-		rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+		String consulta = "ceos";
+		rs = rs(consulta);
 		
 		while(rs.next()) {
 			
@@ -141,7 +148,104 @@ public class ControllerApiMusic {
 			
 		}
 	}
-
+	
+	private void leerContratos() throws SQLException {
+		
+		String consulta = "contratos";
+		rs = rs(consulta);
+		
+		while(rs.next()) {
+			
+//			System.out.println(rs.getInt("id_cancion"));
+//			System.out.println(rs.getInt("id_discografica"));
+			
+			Cancion c = getCancion(rs.getInt("id_cancion"));
+			Discografica d = getDisco(rs.getInt("id_discografica"));
+			
+			if(!c.equals(null) || !d.equals(null)) {
+				listaContratos.add(new Contrato(c, d));
+			}
+		
+		}
+		
+	}
+	
+	private void leerLanzamientos() throws SQLException {
+		
+		rs = rs("lanzamientos");
+		
+		while(rs.next()) {
+			
+			Cancion c = getCancion(rs.getInt("id_cancion"));
+			Artista a = getArtista(rs.getInt("id_artista"));
+			
+			if(!c.equals(null) || !a.equals(null)) {
+				listaLanzamientos.add(new Lanzamiento(c, a));
+			}
+			
+		}
+		
+	}
+	
+	private ResultSet rs(String tabla) throws SQLException {
+		
+		String consulta = "select * from " + tabla + ";";
+		ResultSet rs = ((java.sql.Statement) stmt).executeQuery(consulta);
+		
+		return rs;
+		
+	}
+	
+	private Cancion getCancion(int id) {
+		
+		Cancion get = null;
+		
+		for(Cancion c : listaCanciones) {
+			
+			if(c.getId()==id) {
+				get = c;
+				break;
+			}
+			
+		}
+		
+		return get;
+		
+	}
+	
+	private Discografica getDisco(int id) {
+		
+		Discografica get = null;
+		
+		for(Discografica d : listaDiscograficas) {
+			
+			if(d.getId()==id) {
+				get = d;
+				break;
+			}
+			
+		}
+		
+		return get;
+		
+	}
+	
+	private Artista getArtista(int id) {
+		
+		Artista get = null;
+		
+		for(Artista a : listaArtistas) {
+			
+			if(a.getId()==id) {
+				get = a;
+				break;
+			}
+			
+		}
+		
+		return get;
+		
+	}
 	
 	public boolean login (String user, String passw) {
 		
@@ -261,6 +365,16 @@ public class ControllerApiMusic {
 			
 			System.out.println(ceo + "\n");
 			
+		}
+		
+		for(Contrato c : listaContratos) {
+			
+			System.out.println(c);
+			
+		}
+		
+		for(Lanzamiento l : listaLanzamientos) {
+			System.out.println(l);
 		}
 		
 	}
