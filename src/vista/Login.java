@@ -181,6 +181,8 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 				dialog.setLocationRelativeTo(null);
 				
 				this.setVisible(false);
+				this.dispose();
+				
 			
 			} catch (Exception ex) {
 				ex.printStackTrace();
