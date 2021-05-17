@@ -46,7 +46,7 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	public Register() {
 		
 		setResizable(false);
-		setTitle("Api Music - Register");
+		setTitle("Register Api Music");
 		
 		setBounds(100, 100, 450, 435);
 		getContentPane().setLayout(new BorderLayout());
@@ -128,7 +128,7 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 		}
 		{
 			lblLogoImg = new JLabel("");
-			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource("/img/logotipo-letter.png")));
+			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource("/img/")));
 			lblLogoImg.setBounds(82, 106, 480, 176);
 			contentPanel.add(lblLogoImg);
 		}
