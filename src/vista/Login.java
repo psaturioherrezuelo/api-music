@@ -37,7 +37,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 	private ControllerModels controlador = new ControllerModels();
 
 	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/logo-icon-64px.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/")));
 		setResizable(false);
 		setTitle("Login Api Music");
 		
@@ -90,7 +90,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		contentPane.add(btnSalir);
 		
 		JLabel lblImgLogo = new JLabel("");
-		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource("/img/logotipo-letter.png")));
+		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource("/img/")));
 		lblImgLogo.setBounds(337, 21, 413, 322);
 		contentPane.add(lblImgLogo);
 		
@@ -176,8 +176,8 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 //					JOptionPane.showMessageDialog(null, "Inicio de sesion correcto.");
 					JOptionPane.showMessageDialog(null, "Bienvenido", "Inicio de sesion correcto", JOptionPane.YES_OPTION);
 					this.dispose();
-					Register r = new Register();
-					r.setVisible(true);
+					Principal ventana = new Principal();
+					ventana.setVisible(true);
 					
 				}else {
 					
