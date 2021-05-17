@@ -9,14 +9,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
+
+import controllers.ControllerModels;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -39,6 +41,9 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	private JLabel lblEmail;
 	private JTextField textEmail;
 	private JLabel lblLogoImg;
+	
+	private ControllerModels cm = new ControllerModels();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -170,7 +175,6 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 		// TODO Auto-generated method stub
 		
 		String tocar="";
-		String consulta="";
 		
 		if (e.getSource() == btnReg) {
 			
@@ -189,7 +193,18 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			} else {
 				
 				tocar = "campos importantes ok!";
-				consulta = "INSERT INTO usuarios VALUES ()";
+				
+				try {
+					
+					cm.register(textUser.getText(),textPass.getText(),textNombre.getText(),textApellidos.getText(),textEmail.getText(),textDireccion.getText());
+				
+				} catch (ClassNotFoundException e1) {
+					
+					e1.printStackTrace();
+				} catch (SQLException e1) {
+					
+					e1.printStackTrace();
+				}
 				
 			}
 			
@@ -282,6 +297,21 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public String[] campos() { // Pasar los parametros si llega a ser necesario
+		
+		String campos [] = new String[6];
+		
+		campos[0] = textUser.getText();
+		campos[1] = textPass.getText();
+		campos[2] = textNombre.getText();
+		campos[3] = textApellidos.getText();
+		campos[4] = textEmail.getText();
+		campos[5] = textDireccion.getText();
+		
+		return campos;
 		
 	}
 

@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -28,7 +29,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
-import controllers.ControllerApiMusic;
+import controllers.ControllerModels;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.SwingConstants;
@@ -39,40 +40,14 @@ import java.awt.Toolkit;
 
 public class Login extends JFrame implements WindowListener, ActionListener, MouseListener {
 
-	protected JPanel contentPane;
-	protected JTextField textUser;
-	protected JLabel lblPassword;
-	protected JTextField textPassword;
-	protected JButton btnRegistrar,btnIniciar,btnSalir;
+	private JPanel contentPane;
+	private JTextField textUser;
+	private JLabel lblPassword;
+	private JTextField textPassword;
+	private JButton btnRegistrar,btnIniciar,btnSalir;
 	
-	private static ControllerApiMusic controlador = new ControllerApiMusic();
+	private static ControllerModels controlador = new ControllerModels();
 
-	/**
-	 * Launch the application.
-	 */
-	
-//	public static void main(String[] args) {
-//		
-//		
-//		p.conexion();
-//		
-//		
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					Login frame = new Login();
-//					frame.setVisible(true);
-//					
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
-
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/logo-icon-64px.png")));
 		setResizable(false);
@@ -133,9 +108,6 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		
 		this.setLocationRelativeTo(null); //REVISAR PARA NO CARGAR EL PROGRAMA 200 VECES
 		
-//		controlador.conexion();
-//		controlador.imprimir();
-		
 	}
 
 	@Override
@@ -188,11 +160,9 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 				ex.printStackTrace();
 			}
 			
-//			controlador.register(textUser.getText(), textPassword.getText());
-			
 		} else if (e.getSource() == btnIniciar) {
 			
-//			boolean cnd = false;
+			boolean cnd = false;
 			
 			if(textUser.getText().isEmpty()) {
 				
@@ -204,7 +174,15 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 				
 			} else {
 				
-				boolean cnd = controlador.login(textUser.getText(),textPassword.getText());
+				
+					try {
+						cnd = controlador.login(textUser.getText(),textPassword.getText());
+					} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+				
 				
 				if(cnd==true) {
 					
@@ -213,9 +191,6 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 					this.dispose();
 					Register r = new Register();
 					r.setVisible(true);
-					controlador.conexion();
-					controlador.imprimir();
-					
 					
 				}else {
 					
@@ -274,4 +249,5 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
