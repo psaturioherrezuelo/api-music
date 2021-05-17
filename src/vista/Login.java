@@ -23,9 +23,13 @@ import controllers.ControllerModels;
 
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.UIManager;
 
 public class Login extends JFrame implements WindowListener, ActionListener, MouseListener {
 
@@ -39,19 +43,22 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 	private ControllerFiles cf = new ControllerFiles();
 
 	public Login() {
+		setBackground(new Color(0, 0, 0));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlack())));
 		setResizable(false);
-		setTitle("Login Api Music");
+		setTitle("Login Api Music");		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 450);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(85, 100, 235));
+		
+		contentPane.setBackground(new Color(100, 144, 255));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblUser = new JLabel("Usuario");
+		lblUser.setForeground(new Color(255, 255, 255));
 		lblUser.setHorizontalAlignment(SwingConstants.CENTER);
 		lblUser.setBounds(191, 109, 89, 14);
 		contentPane.add(lblUser);
@@ -63,6 +70,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		textUser.setColumns(10);
 		
 		lblPassword = new JLabel("Contrase\u00F1a");
+		lblPassword.setForeground(new Color(255, 255, 255));
 		lblPassword.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPassword.setBounds(191, 198, 89, 14);
 		contentPane.add(lblPassword);
@@ -95,6 +103,11 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource(cf.getLogoWhite())));
 		lblImgLogo.setBounds(468, 93, 250, 217);
 		contentPane.add(lblImgLogo);
+		
+		JLabel imgBackground = new JLabel("");
+		imgBackground.setIcon(new ImageIcon(Login.class.getResource(cf.getBackground())));
+		imgBackground.setBounds(-532, -340, 1328, 763);
+		contentPane.add(imgBackground);
 		
 		this.setLocationRelativeTo(null);
 		
@@ -232,4 +245,10 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		
 	}
 	
+	public void set(String campos[]) {
+		
+		textUser.setText(campos[0]);
+		textPassword.setText(campos[1]);
+		
+	}
 }

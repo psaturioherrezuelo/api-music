@@ -21,6 +21,7 @@ import controllers.ControllerFiles;
 import controllers.ControllerModels;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
@@ -31,7 +32,7 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	private JButton btnReg, btnCancel;
 	private JLabel lblUser;
 	private JTextField textUser;
-	private JLabel lbNombre;
+	private JLabel lblNombre;
 	private JTextField textNombre;
 	private JLabel lblDireccion;
 	private JTextField textDireccion;
@@ -47,12 +48,13 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	private ControllerFiles cf = new ControllerFiles();
 	
 	public Register() {
+		setBackground(Color.BLACK);
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Register.class.getResource(cf.getIconoBlack())));
 		setResizable(false);
 		setTitle("Register Api Music");
 		
-		setBounds(100, 100, 450, 435);
+		setBounds(100, 100, 800, 450);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBackground(new Color(85, 100, 235));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -60,86 +62,97 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 		contentPanel.setLayout(null);
 		{
 			lblUser = new JLabel("Usuario");
+			lblUser.setForeground(Color.WHITE);
 			lblUser.setHorizontalAlignment(SwingConstants.CENTER);
-			lblUser.setBounds(82, 13, 46, 14);
+			lblUser.setBounds(196, 33, 46, 14);
 			contentPanel.add(lblUser);
 		}
 		{
 			textUser = new JTextField();
-			textUser.setBounds(10, 38, 185, 20);
+			textUser.setBounds(51, 58, 328, 20);
 			contentPanel.add(textUser);
 			textUser.setColumns(10);
 		}
 		{
-			lbNombre = new JLabel("Nombre");
-			lbNombre.setHorizontalAlignment(SwingConstants.CENTER);
-			lbNombre.setBounds(82, 125, 46, 14);
-			contentPanel.add(lbNombre);
+			lblNombre = new JLabel("Nombre");
+			lblNombre.setForeground(Color.WHITE);
+			lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNombre.setBounds(196, 145, 46, 14);
+			contentPanel.add(lblNombre);
 		}
 		{
 			textNombre = new JTextField();
-			textNombre.setBounds(10, 150, 185, 20);
+			textNombre.setBounds(51, 170, 328, 20);
 			contentPanel.add(textNombre);
 			textNombre.setColumns(10);
 		}
 		{
 			lblDireccion = new JLabel("Direccion");
+			lblDireccion.setForeground(Color.WHITE);
 			lblDireccion.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDireccion.setBounds(72, 237, 60, 14);
+			lblDireccion.setBounds(186, 257, 70, 14);
 			contentPanel.add(lblDireccion);
 		}
 		{
 			textDireccion = new JTextField();
-			textDireccion.setBounds(10, 262, 185, 20);
+			textDireccion.setBounds(51, 282, 328, 20);
 			contentPanel.add(textDireccion);
 			textDireccion.setColumns(10);
 		}
 		{
 			lblPass = new JLabel("Contrase\u00F1a");
+			lblPass.setForeground(Color.WHITE);
 			lblPass.setHorizontalAlignment(SwingConstants.CENTER);
-			lblPass.setBounds(72, 69, 67, 14);
+			lblPass.setBounds(186, 89, 67, 14);
 			contentPanel.add(lblPass);
 		}
 		{
 			textPass = new JTextField();
-			textPass.setBounds(10, 94, 185, 20);
+			textPass.setBounds(51, 114, 328, 20);
 			contentPanel.add(textPass);
 			textPass.setColumns(10);
 		}
 		{
 			lblApellidos = new JLabel("Apellidos");
+			lblApellidos.setForeground(Color.WHITE);
 			lblApellidos.setHorizontalAlignment(SwingConstants.CENTER);
-			lblApellidos.setBounds(72, 181, 60, 14);
+			lblApellidos.setBounds(183, 201, 73, 14);
 			contentPanel.add(lblApellidos);
 		}
 		{
 			textApellidos = new JTextField();
 			textApellidos.setColumns(10);
-			textApellidos.setBounds(10, 206, 185, 20);
+			textApellidos.setBounds(51, 226, 328, 20);
 			contentPanel.add(textApellidos);
 		}
 		{
 			lblEmail = new JLabel("Email");
+			lblEmail.setForeground(Color.WHITE);
 			lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-			lblEmail.setBounds(82, 293, 46, 14);
+			lblEmail.setBounds(196, 313, 51, 14);
 			contentPanel.add(lblEmail);
 		}
 		{
 			textEmail = new JTextField();
 			textEmail.setColumns(10);
-			textEmail.setBounds(10, 318, 185, 20);
+			textEmail.setBounds(51, 338, 328, 20);
 			contentPanel.add(textEmail);
 		}
 		{
 			lblLogoImg = new JLabel("");
 			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource(cf.getLogoWhite())));
-			lblLogoImg.setBounds(196, 72, 250, 235);
+			lblLogoImg.setBounds(450, 69, 250, 235);
 			contentPanel.add(lblLogoImg);
 		}
+		
+		JLabel imgBackground = new JLabel("");
+		imgBackground.setIcon(new ImageIcon(Register.class.getResource(cf.getBackground())));
+		imgBackground.setBounds(-532, -340, 1328, 763);
+		contentPanel.add(imgBackground);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			buttonPane.setBackground(new Color(85, 100, 235));
+			buttonPane.setBackground(Color.BLACK);
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				btnReg = new JButton("Registrarse");
@@ -166,24 +179,26 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			
 			if(textUser.getText().isEmpty()) {
 				
-				tocar = "usuario vacio";
+				JOptionPane.showMessageDialog(null, "¡El usuario esta vacio!", "Introduzca usuario", JOptionPane.ERROR_MESSAGE);
 				
 			} else if (textPass.getText().isEmpty()) {
 				
-				tocar ="pass vacia";
+				JOptionPane.showMessageDialog(null, "¡La contraseña esta vacia!", "Introduzca contraseña", JOptionPane.ERROR_MESSAGE);
 				
 			} else if(textEmail.getText().isEmpty()) {
 				
-				tocar = "email vacio";
+				JOptionPane.showMessageDialog(null, "¡El Email esta vacio!", "Introduzca Email", JOptionPane.ERROR_MESSAGE);
 				
 			} else {
-				
-				tocar = "campos importantes ok!";
 				
 				try {
 					
 					cm.register(textUser.getText(),textPass.getText(),textNombre.getText(),textApellidos.getText(),textEmail.getText(),textDireccion.getText());
-				
+					JOptionPane.showMessageDialog(null, "¡Registro completado con exito!", "¡Completado!", JOptionPane.ERROR_MESSAGE);
+					pasarCampos();
+					dispose();
+					
+					
 				} catch (ClassNotFoundException e1) {
 					
 					e1.printStackTrace();
@@ -267,19 +282,17 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 		
 	}
 	
-	public String[] campos() { // Pasar los parametros si llega a ser necesario
+	public void pasarCampos() { // Pasar los parametros si llega a ser necesario
 		
-		String campos [] = new String[6];
+		String campos [] = new String[2];
 		
 		campos[0] = textUser.getText();
 		campos[1] = textPass.getText();
-		campos[2] = textNombre.getText();
-		campos[3] = textApellidos.getText();
-		campos[4] = textEmail.getText();
-		campos[5] = textDireccion.getText();
 		
-		return campos;
+		Login frame = new Login();
+		frame.set(campos);
+		frame.setVisible(true); //REVISAR PARA NO CARGAR EL PROGRAMA 200 VECES
 		
 	}
-
+	
 }
