@@ -1,5 +1,11 @@
 package models;
 
+/* ************************************************************
+
+					Modelo de Discograficas
+
+************************************************************ */
+
 public class Discografica {
 	
 	private int id;

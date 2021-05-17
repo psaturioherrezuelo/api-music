@@ -1,5 +1,11 @@
 package models;
 
+/* ******************************************************************************
+
+		Modelo de Interrelacion entre Canciones y Artistas (Lanzamientos)
+
+****************************************************************************** */
+
 public class Lanzamiento {
 	
 	private Cancion cancion;

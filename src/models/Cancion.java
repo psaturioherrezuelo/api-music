@@ -2,6 +2,12 @@ package models;
 
 import java.time.LocalDate;
 
+/* ************************************************************
+
+					Modelo de Canciones
+
+************************************************************ */
+
 public class Cancion {
 	
 	private int id;

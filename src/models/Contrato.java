@@ -1,5 +1,11 @@
 package models;
 
+/* ******************************************************************************
+
+		Modelo de Interrelacion entre Canciones y Discograficas (Contratos)
+
+****************************************************************************** */
+
 public class Contrato {
 
 	private Cancion cancion;

@@ -14,20 +14,44 @@ import models.Database;
 import models.Discografica;
 import models.Lanzamiento;
 
+/* ************************************************************
+
+		Clase encargada de controlar la BBDD
+
+************************************************************ */
+
 public class ControllerDDBB {
 	
-	private Database bd = new Database();
+	private Database bd;
+	private ResultSet rs;
 	
-	private ResultSet rs = null;
+	public ControllerDDBB() {
+		
+		bd = new Database();
+		rs = null;
+		
+	}
+	
+	/* ************************************************************
+	  
+		 ResultSet general para todos los metodos
+
+	 ************************************************************ */
 	
 	private ResultSet rs(String tabla) throws SQLException {
 	
 		String consulta = "select * from " + tabla + ";";
-		ResultSet rs = ((java.sql.Statement) bd.getStmt()).executeQuery(consulta);
+		rs = ((java.sql.Statement) bd.getStmt()).executeQuery(consulta);
 		
 		return rs;
 		
 	}
+	
+	/* ************************************************************
+	  
+	  		Metodos de carga desde la BBDD a los modelos
+	  
+	 ************************************************************ */
 	
 	public void leerLanzamientos(ArrayList<Cancion>listaCanciones, ArrayList<Artista>listaArtistas, ArrayList<Lanzamiento>listaLanzamientos) throws SQLException {
 		
@@ -48,8 +72,7 @@ public class ControllerDDBB {
 
 	public void leerContratos(ArrayList<Cancion>listaCanciones, ArrayList<Discografica>listaDiscograficas,ArrayList<Contrato>listaContratos) throws SQLException {
 	
-	String consulta = "contratos";
-	rs = rs(consulta);
+	rs = rs("contratos");
 	
 	while(rs.next()) {
 		
@@ -65,41 +88,24 @@ public class ControllerDDBB {
 }
 
 	public void leerCeos(ArrayList<Ceo>listaCeos) throws SQLException {
-
-		int id, idDiscografica;
-		String nombre;
 		
-		String consulta = "ceos";
-		rs = rs(consulta);
+		rs = rs("ceos");
 		
 		while(rs.next()) {
 			
-			id = rs.getInt("id_ceo");
-			nombre = rs.getString("ceo");
-			idDiscografica = rs.getInt("id_discografica");
-			
-			listaCeos.add(new Ceo(id,nombre,idDiscografica));
+			listaCeos.add(new Ceo(rs.getInt("id_ceo"),rs.getString("ceo"),rs.getInt("id_discografica")));
 			
 		}
+		
 	}
 
 	public void leerDiscograficas(ArrayList<Discografica>listaDiscograficas) throws SQLException {
 		
-		int id,tcanciones;
-		String nombre;
-		long visualizaciones;
-		
-		String consulta = "discograficas";
-		rs = rs(consulta);
+		rs = rs("discograficas");
 		
 		while(rs.next()) {
 			
-			id = rs.getInt("id_discografica");
-			nombre = rs.getString("discografica");
-			visualizaciones = rs.getLong("vis_discografica");
-			tcanciones = rs.getInt("total_canc_d");
-			
-			listaDiscograficas.add(new Discografica(id, nombre, visualizaciones, tcanciones));
+			listaDiscograficas.add(new Discografica(rs.getInt("id_discografica"), rs.getString("discografica"), rs.getLong("vis_discografica"), rs.getInt("total_canc_d")));
 			
 		}
 		
@@ -107,21 +113,11 @@ public class ControllerDDBB {
 
 	public void leerArtistas(ArrayList<Artista>listaArtistas) throws SQLException {
 		
-		int id,tcanciones;
-		String nombre;
-		long visualizaciones;
-		
-		String consulta = "artistas";
-		rs = rs(consulta);
+		rs = rs("artistas");
 		
 		while(rs.next()) {
-		
-			id = rs.getInt("id_artista");
-			nombre = rs.getString("artista");
-			visualizaciones = rs.getLong("vis_artista");
-			tcanciones = rs.getInt("total_canc_a");
 			
-			listaArtistas.add(new Artista(id,nombre,visualizaciones,tcanciones));
+			listaArtistas.add(new Artista(rs.getInt("id_artista"), rs.getString("artista"), rs.getLong("vis_artista"), rs.getInt("total_canc_a")));
 			
 		}
 		
@@ -129,34 +125,23 @@ public class ControllerDDBB {
 
 	public void leerCanciones(ArrayList<Cancion>listaCanciones) throws SQLException {
 		
-		String consulta = "canciones";
-		
-		int id;
-		String titulo, genero,parse;
-		LocalDate lanzamiento;
-		long visualizaciones;
-		float precio;
-		boolean explicito;
-		
-		rs = rs(consulta);
+		rs = rs("canciones");
 		
 		while(rs.next()) {
 			
-			id = rs.getInt("id_cancion");
-			titulo = rs.getString("titulo");
-			genero = rs.getString("genero");
-			parse = rs.getString("lanzamiento");
-			lanzamiento = LocalDate.parse(parse);
-			visualizaciones = rs.getLong("visualizaciones");
-			precio = rs.getFloat("precio");
-			explicito = rs.getBoolean("explicito");
-			
-			listaCanciones.add(new Cancion(id,titulo,genero,lanzamiento,visualizaciones,precio,explicito));
+			listaCanciones.add(new Cancion(rs.getInt("id_cancion"), rs.getString("titulo"), rs.getString("genero"), LocalDate.parse(rs.getString("lanzamiento")),
+					rs.getLong("visualizaciones"), rs.getFloat("precio"), rs.getBoolean("explicito")));
 			
 		}
 		
 	}
 
+	/* ***********************************************************************************
+	  
+		Metodos de Busqueda de Objetos con retorno en las tablas de interrelacion
+
+	 *********************************************************************************** */
+	
 	private Cancion getCancion(int id, ArrayList<Cancion>listaCanciones) {
 		
 		Cancion get = null;
@@ -207,14 +192,18 @@ public class ControllerDDBB {
 		return get;
 		
 	}
+	
+	/* ************************************************************
+	  
+		Metodos de login y register comunicando con la BBDD
+
+	 ************************************************************ */
 
 	public boolean login (String user, String passw) throws SQLException {
 		
 		boolean cnd = false;
 		
-		String consulta = "usuarios where usuario ='" + user + "'";
-		
-		rs = rs(consulta);
+		rs = rs("usuarios where usuario ='" + user + "'");
 			
 		while(rs.next()) {
 				
@@ -277,7 +266,13 @@ public class ControllerDDBB {
 		
 	}
 	
-	public void open() { // Abrir conexion con la BBDD
+	/* ************************************************************
+	  
+		Conexion y cierre de la BBDD
+
+	 ************************************************************ */
+	
+	public void open() throws SQLException, ClassNotFoundException { // Abrir conexion con la BBDD
 		
 		bd.conexion();
 		
