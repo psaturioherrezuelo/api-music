@@ -4,6 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/* ************************************************************
+
+				Modelo de la Base de datos
+
+************************************************************ */
+
 public class Database {
 
 	private String bd, url, usuario, password; 
@@ -20,31 +26,23 @@ public class Database {
 		
 	}
 	
-	public void conexion() {
+	/* ************************************************************
+	  
+	 		Metodo encargado de conectar con la base de datos
+
+	 ************************************************************ */
+	
+	public void conexion() throws ClassNotFoundException, SQLException {
 		
-		try {
-			
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			
-			conn=DriverManager.getConnection(url, usuario, password);
-			
-			stmt = conn.createStatement();
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		conn=DriverManager.getConnection(url, usuario, password);
+		stmt = conn.createStatement();
 		
 	}
 
 	public java.sql.Statement getStmt() {
 		return stmt;
 	}
-
-//	private void setStmt(java.sql.Statement stmt) {
-//		this.stmt = stmt;
-//	}
 	
 	public Connection getConn() {
 		return conn;

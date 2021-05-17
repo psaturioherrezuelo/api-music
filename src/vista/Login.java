@@ -1,18 +1,12 @@
 package vista;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -21,17 +15,11 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-
 import controllers.ControllerModels;
 
-import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Color;
@@ -46,7 +34,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 	private JTextField textPassword;
 	private JButton btnRegistrar,btnIniciar,btnSalir;
 	
-	private static ControllerModels controlador = new ControllerModels();
+	private ControllerModels controlador = new ControllerModels();
 
 	public Login() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/logo-icon-64px.png")));
@@ -106,37 +94,32 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		lblImgLogo.setBounds(337, 21, 413, 322);
 		contentPane.add(lblImgLogo);
 		
-		this.setLocationRelativeTo(null); //REVISAR PARA NO CARGAR EL PROGRAMA 200 VECES
+		this.setLocationRelativeTo(null);
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -147,15 +130,13 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 			
 			try {
 				
+				this.dispose();
+				
 				Register dialog = new Register();
 				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dialog.setVisible(true);
 				dialog.setLocationRelativeTo(null);
 				
-				this.setVisible(false);
-				this.dispose();
-				
-			
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -176,11 +157,17 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 				
 				
 					try {
+						
 						cnd = controlador.login(textUser.getText(),textPassword.getText());
+					
 					} catch (ClassNotFoundException e1) {
+					
 						e1.printStackTrace();
+					
 					} catch (SQLException e1) {
+					
 						e1.printStackTrace();
+					
 					}
 				
 				
@@ -210,43 +197,36 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	

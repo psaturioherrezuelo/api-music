@@ -1,7 +1,6 @@
 package controllers;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import models.Artista;
@@ -10,6 +9,12 @@ import models.Ceo;
 import models.Contrato;
 import models.Discografica;
 import models.Lanzamiento;
+
+/* ************************************************************
+
+			Clase encargada de controlar los modelos
+
+************************************************************ */
 
 public class ControllerModels {
 	
@@ -23,43 +28,32 @@ public class ControllerModels {
 	
 	private ControllerDDBB bdc = new ControllerDDBB();
 	
-	public void cargaModelos() throws ClassNotFoundException {
+	/* ********************************************************************************
+
+			Metodo para añadir todos los registros de la BBDD a listas de objetos
+
+	 ******************************************************************************** */
+	
+	public void cargaModelos() throws ClassNotFoundException, SQLException {
 		
-		try {
-			
-			bdc.open();
-			
-			bdc.leerCanciones(listaCanciones);
-			bdc.leerArtistas(listaArtistas);
-			bdc.leerDiscograficas(listaDiscograficas);
-			bdc.leerCeos(listaCeos);
-			bdc.leerContratos(listaCanciones, listaDiscograficas, listaContratos);
-			bdc.leerLanzamientos(listaCanciones, listaArtistas, listaLanzamientos);
-			
-			bdc.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		bdc.open();
+		
+		bdc.leerCanciones(listaCanciones);
+		bdc.leerArtistas(listaArtistas);
+		bdc.leerDiscograficas(listaDiscograficas);
+		bdc.leerCeos(listaCeos);
+		bdc.leerContratos(listaCanciones, listaDiscograficas, listaContratos);
+		bdc.leerLanzamientos(listaCanciones, listaArtistas, listaLanzamientos);
+		
+		bdc.close();
 	
 	}
 	
-//	private Cancion getCancion(int id) {
-//		
-//		Cancion get = null;
-//		
-//		for(Cancion c : listaCanciones) {
-//			
-//			if(c.getId()==id) {
-//				get = c;
-//				break;
-//			}
-//			
-//		}
-//		
-//		return get;
-//		
-//	}
+	/* ********************************************************************************
+
+					Metodos para buscar e insertar usuarios a la BBDD
+
+	 ******************************************************************************** */
 	
 	public boolean login (String user, String passw) throws ClassNotFoundException, SQLException {
 
@@ -79,6 +73,12 @@ public class ControllerModels {
 		bdc.close();
 		
 	}
+	
+	/* ********************************************************************************
+
+			Metodo unicamente para comprobar la carga durante la fase de pruebas
+
+	 ******************************************************************************** */
 	
 	public void imprimir () {
 		

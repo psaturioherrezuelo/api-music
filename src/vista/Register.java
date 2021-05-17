@@ -10,7 +10,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -44,22 +43,6 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	
 	private ControllerModels cm = new ControllerModels();
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			Register dialog = new Register();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public Register() {
 		
 		setResizable(false);
@@ -172,7 +155,6 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 		String tocar="";
 		
@@ -201,9 +183,11 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 				} catch (ClassNotFoundException e1) {
 					
 					e1.printStackTrace();
+				
 				} catch (SQLException e1) {
-					
+				
 					e1.printStackTrace();
+				
 				}
 				
 			}
@@ -212,91 +196,70 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			
 		} else if(e.getSource() == btnCancel) {
 			
-			this.setVisible(false);
 			dispose();
-			new Login().setVisible(true);
+			new Login().setVisible(true); //REVISAR PARA NO CARGAR EL PROGRAMA 200 VECES
 			
 		}
 		
 	}
-	
-	public String cons(String user, String pass, String nombre, String apellidos, String email, String direccion, LocalDate fregistro, boolean admin) {
-		
-		String a="INSERT INTO usuarios VALUES(?,?,?,?,?,?,?,?)";
-		
-		
-		return a;
-	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	

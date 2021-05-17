@@ -2,6 +2,12 @@ package models;
 
 import java.time.LocalDate;
 
+/* ************************************************************
+
+				Modelo de Usuarios del Programa
+
+************************************************************ */
+
 public class Usuario {
 
 	private String user, password, nombre, apellidos, email, direccion;

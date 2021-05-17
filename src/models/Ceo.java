@@ -1,17 +1,15 @@
 package models;
 
+/* ************************************************************
+
+					Modelo de Ceos
+
+************************************************************ */
+
 public class Ceo {
 
 	private int id, idDiscografica;
 	private String nombre;
-	
-	public Ceo() {
-		
-		id=0;
-		nombre = "";
-		idDiscografica = 0;
-		
-	}
 
 	public Ceo(int id, String nombre, int idDiscografica) {
 		
