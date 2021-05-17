@@ -3,6 +3,7 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controllers.ControllerFiles;
 import controllers.ControllerModels;
 
 import javax.swing.JLabel;
@@ -42,9 +44,11 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	private JLabel lblLogoImg;
 	
 	private ControllerModels cm = new ControllerModels();
+	private ControllerFiles cf = new ControllerFiles();
 	
 	public Register() {
 		
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Register.class.getResource(cf.getIconoBlack())));
 		setResizable(false);
 		setTitle("Register Api Music");
 		
@@ -128,8 +132,8 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 		}
 		{
 			lblLogoImg = new JLabel("");
-			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource("/img/")));
-			lblLogoImg.setBounds(82, 106, 480, 176);
+			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource(cf.getLogoWhite())));
+			lblLogoImg.setBounds(196, 72, 250, 235);
 			contentPanel.add(lblLogoImg);
 		}
 		{

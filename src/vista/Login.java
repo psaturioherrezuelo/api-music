@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
+import controllers.ControllerFiles;
 import controllers.ControllerModels;
 
 import javax.swing.SwingConstants;
@@ -35,9 +36,10 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 	private JButton btnRegistrar,btnIniciar,btnSalir;
 	
 	private ControllerModels controlador = new ControllerModels();
+	private ControllerFiles cf = new ControllerFiles();
 
 	public Login() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlack())));
 		setResizable(false);
 		setTitle("Login Api Music");
 		
@@ -90,8 +92,8 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		contentPane.add(btnSalir);
 		
 		JLabel lblImgLogo = new JLabel("");
-		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource("/img/")));
-		lblImgLogo.setBounds(337, 21, 413, 322);
+		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource(cf.getLogoWhite())));
+		lblImgLogo.setBounds(468, 93, 250, 217);
 		contentPane.add(lblImgLogo);
 		
 		this.setLocationRelativeTo(null);
