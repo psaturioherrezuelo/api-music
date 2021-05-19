@@ -2,7 +2,9 @@ package models;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /* ************************************************************
 
@@ -37,6 +39,14 @@ public class Database {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		conn=DriverManager.getConnection(url, usuario, password);
 		stmt = conn.createStatement();
+		
+	}
+	
+	public void conexionLectura() throws SQLException, ClassNotFoundException {
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		conn=DriverManager.getConnection(url, usuario, password);
+		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
 		
 	}
 

@@ -2,7 +2,8 @@ package controllers;
 
 import java.awt.EventQueue;
 
-import vista.Login;
+import models.Database;
+import views.Login;
 
 public class Principal {
 
@@ -20,8 +21,8 @@ public class Principal {
 			
 				try {
 				
-					Login frame = new Login();
-					frame.setVisible(true);
+//					Login frame = new Login();
+//					frame.setVisible(true);
 					
 				} catch (Exception e) {
 					

@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 
 import models.Artista;
 import models.Cancion;
@@ -132,6 +134,49 @@ public class ControllerDDBB {
 			listaCanciones.add(new Cancion(rs.getInt("id_cancion"), rs.getString("titulo"), rs.getString("genero"), LocalDate.parse(rs.getString("lanzamiento")),
 					rs.getLong("visualizaciones"), rs.getFloat("precio"), rs.getBoolean("explicito")));
 			
+		}
+		
+	}
+	
+	/* ************************************************************
+	  
+		Metodos de carga desde la BBDD a las tablas
+
+	 ************************************************************ */
+	
+	public void tablaCanciones(String columnas[], String tabla[][]) throws SQLException, ClassNotFoundException {
+		
+		int pos=0;
+		
+		rs = rs("canciones");
+
+		columnas = new String[rs.getMetaData().getColumnCount()];
+		
+		for (int i=0; i<columnas.length; i++) {
+		
+			columnas[i] = rs.getMetaData().getColumnName(i+1);
+			System.out.println(columnas[i]);
+		
+		}
+		
+		rs.last();
+		
+		tabla = new String [rs.getRow()][columnas.length];
+		
+		rs.beforeFirst();
+		
+		
+		while (rs.next()) {
+			
+			for (int i=0; i<columnas.length; i++) {
+			
+				tabla[pos][i] = rs.getString(i+1);
+			
+			}
+			
+			System.out.println(Arrays.toString(tabla[pos]));
+			pos++;
+		
 		}
 		
 	}
@@ -278,8 +323,16 @@ public class ControllerDDBB {
 		
 	}
 	
+	public void openOnlyRead() throws ClassNotFoundException, SQLException {
+		
+		bd.conexion();
+		
+	}
+	
 	public void close() throws SQLException { // Cerrar Conexion con la BBDD
 		
+		rs.close();
+		bd.getStmt().close();
 		bd.getConn().close();
 		
 	}

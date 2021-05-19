@@ -49,6 +49,16 @@ public class ControllerModels {
 	
 	}
 	
+	public void cargaTablas(String columnas[],String tablaCanciones[][]) throws ClassNotFoundException, SQLException {
+		
+		bdc.openOnlyRead();
+		
+		bdc.tablaCanciones(columnas, tablaCanciones);
+		
+		bdc.close();
+		
+	}
+	
 	/* ********************************************************************************
 
 					Metodos para buscar e insertar usuarios a la BBDD

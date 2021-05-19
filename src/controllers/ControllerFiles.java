@@ -6,11 +6,12 @@ public class ControllerFiles {
 	
 	public ControllerFiles() {
 		
-		iconoBlack = "/img/icono-apimusic-black.png";
-		logoBlack = "/img/logo-apimusic-250px-black.png";
-		iconoWhite = "/img/";
-		logoWhite = "/img/logo-apimusic-250px-white.png";
-		background = "/img/background1.jpg";
+		iconoBlack = "/images/icono-apimusic-black.png";
+		logoBlack = "/images/logo-apimusic-250px-black.png";
+		iconoWhite = "/images/";
+		logoWhite = "/images/logo-apimusic-250px-white.png";
+//		background = "/images/background1.jpg";
+		background = "/images/bg-filtrado.png";
 		
 	}
 
