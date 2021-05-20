@@ -1,4 +1,4 @@
-package vista;
+package views;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,13 +23,9 @@ import controllers.ControllerModels;
 
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Toolkit;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.UIManager;
 
 public class Login extends JFrame implements WindowListener, ActionListener, MouseListener {
 
@@ -191,8 +187,9 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 //					JOptionPane.showMessageDialog(null, "Inicio de sesion correcto.");
 					JOptionPane.showMessageDialog(null, "Bienvenido", "Inicio de sesion correcto", JOptionPane.YES_OPTION);
 					this.dispose();
-					Principal ventana = new Principal();
+					Aplicacion ventana = new Aplicacion("Canciones");
 					ventana.setVisible(true);
+					ventana.setLocationRelativeTo(null);
 					
 				}else {
 					

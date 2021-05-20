@@ -2,6 +2,7 @@ package controllers;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import models.Artista;
 import models.Cancion;
@@ -26,6 +27,8 @@ public class ControllerModels {
 	private ArrayList<Contrato> listaContratos = new ArrayList<Contrato>();
 	private ArrayList<Lanzamiento> listaLanzamientos = new ArrayList<Lanzamiento>();
 	
+	private String columnas[], datos[][];
+	
 	private ControllerDDBB bdc = new ControllerDDBB();
 	
 	/* ********************************************************************************
@@ -47,6 +50,41 @@ public class ControllerModels {
 		
 		bdc.close();
 	
+	}
+	
+	public void cargaTablass(String columna[]) throws ClassNotFoundException, SQLException {
+		
+		bdc.tablaCanciones(columnas, datos);
+		columna = columnas;
+//		System.out.println(Arrays.toString(columnas));
+		
+		for(String a : columnas) {
+			System.out.println(a);
+		}
+		
+	}
+	
+	public String[] cargaColumnas(String consulta) throws ClassNotFoundException, SQLException {
+		
+		bdc.openOnlyRead();		
+		
+		String columnas[] = bdc.columnas(consulta);
+		
+		bdc.close();
+	
+		return columnas;
+	}
+	
+	public String[][] cargaTablas(String columnas [], String consulta) throws ClassNotFoundException, SQLException {
+		
+		bdc.openOnlyRead();
+		
+		String tabla [][] = bdc.tabla(columnas,consulta);
+		
+		bdc.close();
+		
+		return tabla;
+		
 	}
 	
 	/* ********************************************************************************
