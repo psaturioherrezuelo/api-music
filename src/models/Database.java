@@ -42,11 +42,13 @@ public class Database {
 		
 	}
 	
-	public void conexionLectura() throws SQLException, ClassNotFoundException {
+	public Statement conexionLectura() throws SQLException, ClassNotFoundException {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		conn=DriverManager.getConnection(url, usuario, password);
 		stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+		
+		return stmt;
 		
 	}
 

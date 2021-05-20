@@ -187,8 +187,9 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 //					JOptionPane.showMessageDialog(null, "Inicio de sesion correcto.");
 					JOptionPane.showMessageDialog(null, "Bienvenido", "Inicio de sesion correcto", JOptionPane.YES_OPTION);
 					this.dispose();
-//					Aplicacion ventana = new Aplicacion();
-//					ventana.setVisible(true);
+					Aplicacion ventana = new Aplicacion("Canciones");
+					ventana.setVisible(true);
+					ventana.setLocationRelativeTo(null);
 					
 				}else {
 					

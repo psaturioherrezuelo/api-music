@@ -3,10 +3,10 @@ package controllers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 import models.Artista;
 import models.Cancion;
@@ -15,6 +15,7 @@ import models.Contrato;
 import models.Database;
 import models.Discografica;
 import models.Lanzamiento;
+
 
 /* ************************************************************
 
@@ -147,16 +148,16 @@ public class ControllerDDBB {
 	public void tablaCanciones(String columnas[], String tabla[][]) throws SQLException, ClassNotFoundException {
 		
 		int pos=0;
+		Statement stmt = bd.conexionLectura();
 		
 		rs = rs("canciones");
-
+		
 		columnas = new String[rs.getMetaData().getColumnCount()];
 		
 		for (int i=0; i<columnas.length; i++) {
-		
+			
 			columnas[i] = rs.getMetaData().getColumnName(i+1);
 			System.out.println(columnas[i]);
-		
 		}
 		
 		rs.last();
@@ -164,7 +165,6 @@ public class ControllerDDBB {
 		tabla = new String [rs.getRow()][columnas.length];
 		
 		rs.beforeFirst();
-		
 		
 		while (rs.next()) {
 			
@@ -174,11 +174,56 @@ public class ControllerDDBB {
 			
 			}
 			
-			System.out.println(Arrays.toString(tabla[pos]));
 			pos++;
 		
 		}
 		
+	}
+	
+	public String[] columnas(String consulta) throws SQLException {
+		
+		rs = rs(consulta);
+		
+		String [] columnas = new String[rs.getMetaData().getColumnCount()];
+		
+		for (int i=0; i<columnas.length; i++) {
+			
+			columnas[i] = rs.getMetaData().getColumnName(i+1);
+//			System.out.println(columnas[i]);
+		
+		}
+		
+		return columnas;
+		
+	}
+	
+	public String[][] tabla(String columnas[], String consulta) throws SQLException, ClassNotFoundException {
+		
+		Statement stmt = bd.conexionLectura();
+		
+		rs = rs(consulta);
+
+		rs.last();
+		
+		String tabla [][] = new String [rs.getRow()][columnas.length];
+		
+		rs.beforeFirst();
+		
+		int pos=0;
+		
+		while (rs.next()) {
+			
+			for (int i=0; i<columnas.length; i++) {
+			
+				tabla[pos][i] = rs.getString(i+1);
+			
+			}
+			System.out.println(Arrays.toString(tabla[pos]));
+			pos++;
+		
+		}
+		return tabla;
+				
 	}
 
 	/* ***********************************************************************************

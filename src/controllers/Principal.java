@@ -21,8 +21,8 @@ public class Principal {
 			
 				try {
 				
-//					Login frame = new Login();
-//					frame.setVisible(true);
+					Login frame = new Login();
+					frame.setVisible(true);
 					
 				} catch (Exception e) {
 					
