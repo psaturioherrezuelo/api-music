@@ -3,6 +3,7 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 
 import javax.swing.JFrame;
@@ -34,6 +35,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JLabel;
+import javax.swing.JButton;
 
 public class Aplicacion extends JFrame implements WindowListener, ActionListener, MouseListener {
 
@@ -44,6 +46,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 	private JComboBox selector;
 	private JLabel imgBackground1;
 	private JLabel imgBackground2;
+	private JButton btnInsert;
 	private String columnas[], datos[][],consulta = "canciones";;
 	
 	ControllerModels cm = new ControllerModels();
@@ -56,6 +59,10 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlack())));
+		setResizable(false);
+		setTitle("Api Music");	
+		setLocationRelativeTo(null);
 		
 		try {
 			columnas = cm.cargaColumnas(consulta);
@@ -101,11 +108,15 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		imgBackground1.setBounds(0, 0, 932, 462);
 		panel_1.add(imgBackground1);
 		
+		btnInsert = new JButton("Insertar");
+		btnInsert.setBounds(833, 144, 89, 23);
+		btnInsert.addActionListener(this);
+		contentPane.add(btnInsert);
+		
 		JLabel imgBackground2 = new JLabel("");
 		imgBackground2.setIcon(new ImageIcon(Login.class.getResource(cf.getBackground())));
 		imgBackground2.setBounds(0, 0, 932, 462);
 		contentPane.add(imgBackground2);
-		
 		
 	}
 
@@ -163,9 +174,16 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 				e1.printStackTrace();
 			}
 			
-			System.out.println(selector.getSelectedItem());
-			System.out.println(consulta);
+			
+		} else if(e.getSource() == btnInsert) {
+			
+			Insertar ins = new Insertar();
+			ins.setVisible(true);
+			
 		}
+		
+		System.out.println(selector.getSelectedItem());
+		System.out.println(consulta);
 		
 	}
 
@@ -217,5 +235,4 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		datos = cm.cargaTablas(columnas,consulta);
 		
 	}
-	
 }
