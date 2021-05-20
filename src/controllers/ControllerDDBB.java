@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import models.Artista;
 import models.Cancion;
@@ -31,7 +30,6 @@ public class ControllerDDBB {
 	public ControllerDDBB() {
 		
 		bd = new Database();
-		rs = null;
 		
 	}
 	
@@ -218,7 +216,7 @@ public class ControllerDDBB {
 				tabla[pos][i] = rs.getString(i+1);
 			
 			}
-			System.out.println(Arrays.toString(tabla[pos]));
+			
 			pos++;
 		
 		}
@@ -376,7 +374,6 @@ public class ControllerDDBB {
 	
 	public void close() throws SQLException { // Cerrar Conexion con la BBDD
 		
-		rs.close();
 		bd.getStmt().close();
 		bd.getConn().close();
 		

@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import controllers.ControllerFiles;
@@ -37,7 +38,7 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	private JLabel lblDireccion;
 	private JTextField textDireccion;
 	private JLabel lblPass;
-	private JTextField textPass;
+	private JPasswordField textPass;
 	private JLabel lblApellidos;
 	private JTextField textApellidos;
 	private JLabel lblEmail;
@@ -107,7 +108,8 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			contentPanel.add(lblPass);
 		}
 		{
-			textPass = new JTextField();
+
+			textPass = new JPasswordField();
 			textPass.setBounds(51, 114, 328, 20);
 			contentPanel.add(textPass);
 			textPass.setColumns(10);

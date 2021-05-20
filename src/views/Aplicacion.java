@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -158,12 +159,12 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			try {
 				
 				tablas(consulta);
+//				table.repaint();
+//				scrollPane.repaint();
 //				this.dispose();
 //				Aplicacion programa = new Aplicacion(consulta);
 //				programa.setVisible(true);
 //				programa.setLocationRelativeTo(null);
-				table.tableChanged(null);
-				table.getValueAt(1, 1);
 //				table = new JTable(datos, columnas);
 //				table.setVisible(true);
 //				scrollPane.
@@ -182,6 +183,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			
 		}
 		
+		imp();
 		System.out.println(selector.getSelectedItem());
 		System.out.println(consulta);
 		
@@ -233,6 +235,15 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		
 		columnas = cm.cargaColumnas(consulta);
 		datos = cm.cargaTablas(columnas,consulta);
+		
+	}
+	
+	public void imp() {
+		
+		for(String a[] : datos) {
+			
+			System.out.println(Arrays.toString(a));
+		}
 		
 	}
 }

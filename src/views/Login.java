@@ -2,6 +2,7 @@ package views;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -71,7 +72,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 		lblPassword.setBounds(191, 198, 89, 14);
 		contentPane.add(lblPassword);
 		
-		textPassword = new JTextField();
+		textPassword = new JPasswordField();
 		textPassword.setToolTipText("textpassword");
 		textPassword.setBounds(70, 223, 328, 20);
 		contentPane.add(textPassword);
