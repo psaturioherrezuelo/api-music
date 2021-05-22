@@ -18,7 +18,6 @@ public class Database {
 	
 	private Connection conn;
 	private java.sql.Statement stmt;
-	private ResultSet rs;
 	
 	public Database() {
 		
@@ -28,7 +27,6 @@ public class Database {
 		password = "";
 		conn = null;
 		stmt = null;
-//		rs = null;
 		
 	}
 	

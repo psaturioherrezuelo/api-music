@@ -187,7 +187,6 @@ public class ControllerDDBB {
 		for (int i=0; i<columnas.length; i++) {
 			
 			columnas[i] = rs.getMetaData().getColumnName(i+1);
-//			System.out.println(columnas[i]);
 		
 		}
 		
@@ -324,20 +323,8 @@ public class ControllerDDBB {
 		PreparedStatement str = null;
 		
 		bd.getConn().setAutoCommit(false);
-		
-		
 			
-//		stmt = conn.createStatement();
-//			
-//		String consulta = "INSERT INTO usuarios VALUES ('" + user + "',AES_ENCRYPT('" + passw + "','api'));";
-//		rs = ((java.sql.Statement) stmt).executeQuery(consulta);
-			
-			
-			
-		str = bd.getConn().prepareStatement("INSERT INTO usuarios (usuario,password,nombre,apellidos,email,direccion,fregistro,administrador) VALUES (?,?,?,?,?,?,?,?);");
-//		str = conn.prepareStatement("INSERT INTO usuarios VALUES (?,AES_ENCRYPT(?,'api'));");
-
-//		passw = (AES);	
+		str = bd.getConn().prepareStatement("INSERT INTO usuarios (usuario,password,nombre,apellidos,email,direccion,fregistro,administrador) VALUES (?,?,?,?,?,?,?,?);");	
 			
 		str.setString(1, user);
 		str.setString(2, passw);
@@ -348,6 +335,48 @@ public class ControllerDDBB {
 		str.setString(7, LocalDate.now().toString());
 		str.setInt(8, 0);
 			
+		str.executeUpdate();
+		
+		bd.getConn().commit();
+		
+	}
+	
+	/* ************************************************************
+	  
+		Insertar en la BBDD
+
+	 ************************************************************ */
+	
+	public void insertar(String cancion,String genero,LocalDate lanzamiento,long visualizaciones,float precio,boolean explicito,String artista,String discografica) throws SQLException {
+		
+		PreparedStatement str = null;
+		bd.getConn().setAutoCommit(false);
+		
+		str = bd.getConn().prepareStatement("call comprobar_artista(?);");
+		str.setString(1, artista);
+		str.executeUpdate();
+		
+		str = bd.getConn().prepareStatement("call comprobar_discografica(?);");
+		str.setString(1, discografica);
+		str.executeUpdate();
+		
+		str = bd.getConn().prepareStatement("INSERT INTO canciones (titulo,genero,lanzamiento,visualizaciones,precio,explicito) VALUES (?,?,?,?,?,?);");
+		str.setString(1, cancion);
+		str.setString(2, genero);
+		str.setString(3, lanzamiento + "");
+		str.setLong(4, visualizaciones);
+		str.setFloat(5, precio);
+		str.setBoolean(6, explicito);
+		str.executeUpdate();
+		
+		str = bd.getConn().prepareStatement("call ins_contratos(?,?);");
+		str.setString(1, cancion);
+		str.setString(2, discografica);
+		str.executeUpdate();
+		
+		str = bd.getConn().prepareStatement("call ins_lanzamientos(?,?);");
+		str.setString(1, cancion);
+		str.setString(2, artista);
 		str.executeUpdate();
 		
 		bd.getConn().commit();

@@ -65,19 +65,20 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		setTitle("Api Music");	
 		setLocationRelativeTo(null);
 		
-		try {
-			columnas = cm.cargaColumnas(consulta);
-			datos = cm.cargaTablas(columnas,consulta);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		contentPane.setLayout(null);
 		
-		table = new JTable(datos, columnas);
+		table = new JTable(new DefaultTableModel(datos,columnas));
+		
+		try {
+			
+			tabla(consulta);
+		
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 		table.setBounds(10, 10, 400, 400);
 		
 		scrollPane = new JScrollPane(table);
@@ -155,19 +156,12 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 	public void actionPerformed(ActionEvent e) {
 	
 		if(e.getSource() == selector) {
+			
 			consulta = selector.getSelectedItem().toString();
-			try {
+			
+			try {	
 				
-				tablas(consulta);
-//				table.repaint();
-//				scrollPane.repaint();
-//				this.dispose();
-//				Aplicacion programa = new Aplicacion(consulta);
-//				programa.setVisible(true);
-//				programa.setLocationRelativeTo(null);
-//				table = new JTable(datos, columnas);
-//				table.setVisible(true);
-//				scrollPane.
+				tabla(consulta);
 				
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
@@ -182,10 +176,6 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			ins.setVisible(true);
 			
 		}
-		
-		imp();
-		System.out.println(selector.getSelectedItem());
-		System.out.println(consulta);
 		
 	}
 
@@ -231,19 +221,10 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		
 	}
 	
-	public void tablas(String consulta) throws ClassNotFoundException, SQLException {
+	public void tabla(String consulta) throws ClassNotFoundException, SQLException {
 		
-		columnas = cm.cargaColumnas(consulta);
-		datos = cm.cargaTablas(columnas,consulta);
+		table.setModel(cm.tabla(consulta));
 		
 	}
 	
-	public void imp() {
-		
-		for(String a[] : datos) {
-			
-			System.out.println(Arrays.toString(a));
-		}
-		
-	}
 }
