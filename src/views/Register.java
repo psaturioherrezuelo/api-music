@@ -39,6 +39,8 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 	private JTextField textDireccion;
 	private JLabel lblPass;
 	private JPasswordField textPass;
+	private JLabel lblPass2;
+	private JPasswordField textPass2;
 	private JLabel lblApellidos;
 	private JTextField textApellidos;
 	private JLabel lblEmail;
@@ -65,12 +67,12 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			lblUser = new JLabel("Usuario");
 			lblUser.setForeground(Color.WHITE);
 			lblUser.setHorizontalAlignment(SwingConstants.CENTER);
-			lblUser.setBounds(196, 33, 46, 14);
+			lblUser.setBounds(197, 21, 46, 14);
 			contentPanel.add(lblUser);
 		}
 		{
 			textUser = new JTextField();
-			textUser.setBounds(51, 58, 328, 20);
+			textUser.setBounds(52, 46, 328, 20);
 			contentPanel.add(textUser);
 			textUser.setColumns(10);
 		}
@@ -78,12 +80,12 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			lblNombre = new JLabel("Nombre");
 			lblNombre.setForeground(Color.WHITE);
 			lblNombre.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNombre.setBounds(196, 145, 46, 14);
+			lblNombre.setBounds(195, 171, 46, 14);
 			contentPanel.add(lblNombre);
 		}
 		{
 			textNombre = new JTextField();
-			textNombre.setBounds(51, 170, 328, 20);
+			textNombre.setBounds(51, 190, 328, 20);
 			contentPanel.add(textNombre);
 			textNombre.setColumns(10);
 		}
@@ -91,12 +93,12 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			lblDireccion = new JLabel("Direccion");
 			lblDireccion.setForeground(Color.WHITE);
 			lblDireccion.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDireccion.setBounds(186, 257, 70, 14);
+			lblDireccion.setBounds(186, 269, 70, 14);
 			contentPanel.add(lblDireccion);
 		}
 		{
 			textDireccion = new JTextField();
-			textDireccion.setBounds(51, 282, 328, 20);
+			textDireccion.setBounds(50, 289, 328, 20);
 			contentPanel.add(textDireccion);
 			textDireccion.setColumns(10);
 		}
@@ -104,40 +106,54 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 			lblPass = new JLabel("Contrase\u00F1a");
 			lblPass.setForeground(Color.WHITE);
 			lblPass.setHorizontalAlignment(SwingConstants.CENTER);
-			lblPass.setBounds(186, 89, 67, 14);
+			lblPass.setBounds(186, 72, 67, 14);
 			contentPanel.add(lblPass);
 		}
 		{
 
 			textPass = new JPasswordField();
-			textPass.setBounds(51, 114, 328, 20);
+			textPass.setBounds(51, 92, 328, 20);
 			contentPanel.add(textPass);
 			textPass.setColumns(10);
+		}
+		{
+			lblPass2 = new JLabel("Confirmar contrase\u00F1a");
+			lblPass2.setForeground(Color.WHITE);
+			lblPass2.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPass2.setBounds(154, 122, 127, 14);
+			contentPanel.add(lblPass2);
+		}
+		{
+
+			textPass2 = new JPasswordField();
+			textPass2.setBounds(52, 144, 328, 20);
+			contentPanel.add(textPass2);
+			textPass2.setColumns(10);
 		}
 		{
 			lblApellidos = new JLabel("Apellidos");
 			lblApellidos.setForeground(Color.WHITE);
 			lblApellidos.setHorizontalAlignment(SwingConstants.CENTER);
-			lblApellidos.setBounds(183, 201, 73, 14);
+			lblApellidos.setBounds(182, 219, 73, 14);
 			contentPanel.add(lblApellidos);
 		}
 		{
 			textApellidos = new JTextField();
 			textApellidos.setColumns(10);
-			textApellidos.setBounds(51, 226, 328, 20);
+			textApellidos.setBounds(51, 241, 328, 20);
 			contentPanel.add(textApellidos);
 		}
 		{
 			lblEmail = new JLabel("Email");
 			lblEmail.setForeground(Color.WHITE);
 			lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
-			lblEmail.setBounds(196, 313, 51, 14);
+			lblEmail.setBounds(197, 317, 51, 14);
 			contentPanel.add(lblEmail);
 		}
 		{
 			textEmail = new JTextField();
 			textEmail.setColumns(10);
-			textEmail.setBounds(51, 338, 328, 20);
+			textEmail.setBounds(52, 339, 328, 20);
 			contentPanel.add(textEmail);
 		}
 		{
@@ -187,28 +203,40 @@ public class Register extends JDialog implements WindowListener, ActionListener,
 				
 				JOptionPane.showMessageDialog(null, "¡La contraseña esta vacia!", "Introduzca contraseña", JOptionPane.ERROR_MESSAGE);
 				
+			} else if (textPass2.getText().isEmpty()) {
+				
+				JOptionPane.showMessageDialog(null, "¡La comprobacion de contraseña esta vacia!", "Vuelva a introducir la contraseña", JOptionPane.ERROR_MESSAGE);
+				
 			} else if(textEmail.getText().isEmpty()) {
 				
 				JOptionPane.showMessageDialog(null, "¡El Email esta vacio!", "Introduzca Email", JOptionPane.ERROR_MESSAGE);
 				
 			} else {
 				
-				try {
+				if(textPass.getText().equals(textPass2.getText())) {
 					
-					cm.register(textUser.getText(),textPass.getText(),textNombre.getText(),textApellidos.getText(),textEmail.getText(),textDireccion.getText());
-					JOptionPane.showMessageDialog(null, "¡Registro completado con exito!", "¡Completado!", JOptionPane.ERROR_MESSAGE);
-					pasarCampos();
-					dispose();
+					try {
+						
+						cm.register(textUser.getText(),textPass.getText(),textNombre.getText(),textApellidos.getText(),textEmail.getText(),textDireccion.getText());
+						JOptionPane.showMessageDialog(null, "¡Registro completado con exito!", "¡Completado!", JOptionPane.ERROR_MESSAGE);
+						pasarCampos();
+						dispose();
+						
+						
+					} catch (ClassNotFoundException e1) {
+						
+						e1.printStackTrace();
 					
+					} catch (SQLException e1) {
 					
-				} catch (ClassNotFoundException e1) {
+						e1.printStackTrace();
 					
-					e1.printStackTrace();
-				
-				} catch (SQLException e1) {
-				
-					e1.printStackTrace();
-				
+					}
+					
+				} else {
+					
+					JOptionPane.showMessageDialog(null, "¡Las contraseñas no coinciden!", "Error", JOptionPane.ERROR_MESSAGE);
+					
 				}
 				
 			}

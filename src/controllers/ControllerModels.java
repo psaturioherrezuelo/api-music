@@ -1,8 +1,11 @@
 package controllers;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.swing.table.DefaultTableModel;
 
 import models.Artista;
 import models.Cancion;
@@ -30,6 +33,7 @@ public class ControllerModels {
 	private String columnas[], datos[][];
 	
 	private ControllerDDBB bdc = new ControllerDDBB();
+	private MD5 encriptador = new MD5();
 	
 	/* ********************************************************************************
 
@@ -49,54 +53,31 @@ public class ControllerModels {
 		bdc.leerLanzamientos(listaCanciones, listaArtistas, listaLanzamientos);
 		
 		bdc.close();
-	
-	}
-	
-	public void cargaTablass(String columna[]) throws ClassNotFoundException, SQLException {
-		
-		bdc.tablaCanciones(columnas, datos);
-		columna = columnas;
-//		System.out.println(Arrays.toString(columnas));
-		
-		for(String a : columnas) {
-			System.out.println(a);
-		}
 		
 	}
 	
-	public String[] cargaColumnas(String consulta) throws ClassNotFoundException, SQLException {
-		
-		bdc.openOnlyRead();		
-		
-		String columnas[] = bdc.columnas(consulta);
-		
-		bdc.close();
-	
-		return columnas;
-	}
-	
-	public String[][] cargaTablas(String columnas [], String consulta) throws ClassNotFoundException, SQLException {
+	public DefaultTableModel tabla(String consulta) throws ClassNotFoundException, SQLException {
 		
 		bdc.openOnlyRead();
+		columnas = bdc.columnas(consulta);
+		datos = bdc.tabla(columnas,consulta);
 		
-		String tabla [][] = bdc.tabla(columnas,consulta);
-		
+		DefaultTableModel modelo = new DefaultTableModel(datos,columnas);
 		bdc.close();
-		
-		return tabla;
+		return modelo;
 		
 	}
 	
 	/* ********************************************************************************
 
-					Metodos para buscar e insertar usuarios a la BBDD
+					Metodos para buscar e insertar en la BBDD
 
 	 ******************************************************************************** */
 	
 	public boolean login (String user, String passw) throws ClassNotFoundException, SQLException {
 
 		bdc.open();
-		Boolean cnd = bdc.login(user,passw);
+		Boolean cnd = bdc.login(user,encriptador.codificarPass(passw));
 		
 		bdc.close();
 		
@@ -107,10 +88,21 @@ public class ControllerModels {
 	public void register(String user, String passw, String nombre, String apellidos, String email, String direccion) throws ClassNotFoundException, SQLException {
 		
 		bdc.open();
-		bdc.register(user, passw, nombre, apellidos, email, direccion);
+		bdc.register(user,encriptador.codificarPass(passw), nombre, apellidos, email, direccion);
 		bdc.close();
 		
 	}
+	
+	public void insert(String cancion,String genero,LocalDate lanzamiento,long visualizaciones,float precio,boolean explicito,String artista,String discografica) throws ClassNotFoundException, SQLException {
+		
+		bdc.open();
+		
+		bdc.insertar(cancion, genero, lanzamiento, visualizaciones, precio, explicito, artista, discografica);
+		bdc.close();
+		
+	}
+	
+	
 	
 	/* ********************************************************************************
 

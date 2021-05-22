@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,6 +23,7 @@ import controllers.ControllerModels;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -37,10 +40,7 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 	private ControllerModels cm = new ControllerModels();
 	private ControllerFiles cf = new ControllerFiles();
 	
-	private JTabbedPane tabbedPane;
-	
 	/*Panel Canciones*/
-	private JPanel panelCanciones;
 	private JLabel lblCancion;
 	private JTextField textCancion;
 	private JLabel lblGenero;
@@ -54,25 +54,10 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 	private JCheckBox chckbxExplicito;
 	private JComboBox comboBoxArtista;
 	private JComboBox comboBoxDiscografica;
-	
-	/*Panel Artistas*/
-	private JPanel panelArtistas;
 	private JLabel lblArtista;
-	private JLabel lblArtista_1;
 	private JTextField textArtista;
-	
-	/*Panel Discograficas*/
-	private JPanel panelDiscograficas;
 	private JLabel lblDiscografica;
-	private JLabel lblDiscografica_1;
 	private JTextField textDiscografica;
-	
-	/*Panel Ceos*/
-	private JPanel panelCeos;
-	private JLabel lblCeo;
-	private JTextField textCeo;
-	private JLabel lblDiscograficaCeos;
-	private JComboBox comboBoxDiscograficaCeo;
 	
 	/*Panel Botones*/
 	private JPanel buttonPane;
@@ -94,168 +79,105 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 		setLocationRelativeTo(null);
 		
 		{
-			tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-			tabbedPane.setBounds(0, 0, 563, 230);
-			tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-			tabbedPane.setBackground(new Color(16, 155, 197));
-			contentPanel.add(tabbedPane);
 			{
-				panelCanciones = new JPanel();
-				panelCanciones.setBounds(100, 100, 450, 300);
-				tabbedPane.addTab("Canciones", null, panelCanciones, null);
-				panelCanciones.setLayout(null);
 				
 				textCancion = new JTextField();
-				textCancion.setBounds(10, 48, 150, 20);
-				panelCanciones.add(textCancion);
+				textCancion.setBounds(34, 59, 150, 20);
+				contentPanel.add(textCancion);
 				textCancion.setColumns(10);
 				
 				textGenero = new JTextField();
-				textGenero.setBounds(10, 104, 150, 20);
-				panelCanciones.add(textGenero);
+				textGenero.setBounds(34, 115, 150, 20);
+				contentPanel.add(textGenero);
 				textGenero.setColumns(10);
 				
 				lblCancion = new JLabel("Canci\u00F3n");
 				lblCancion.setForeground(Color.WHITE);
 				lblCancion.setHorizontalAlignment(SwingConstants.CENTER);
-				lblCancion.setBounds(56, 23, 47, 14);
-				panelCanciones.add(lblCancion);
+				lblCancion.setBounds(80, 34, 47, 14);
+				contentPanel.add(lblCancion);
 				
 				lblGenero = new JLabel("G\u00E9nero");
 				lblGenero.setForeground(Color.WHITE);
 				lblGenero.setHorizontalAlignment(SwingConstants.CENTER);
-				lblGenero.setBounds(56, 79, 47, 14);
-				panelCanciones.add(lblGenero);
+				lblGenero.setBounds(80, 90, 47, 14);
+				contentPanel.add(lblGenero);
 				
 				textLanzamiento = new JTextField();
-				textLanzamiento.setBounds(10, 160, 150, 20);
-				panelCanciones.add(textLanzamiento);
+				textLanzamiento.setBounds(34, 171, 150, 20);
+				contentPanel.add(textLanzamiento);
 				textLanzamiento.setColumns(10);
 				
 				lblLanzamiento = new JLabel("Lanzamiento");
 				lblLanzamiento.setForeground(Color.WHITE);
 				lblLanzamiento.setHorizontalAlignment(SwingConstants.CENTER);
-				lblLanzamiento.setBounds(44, 135, 77, 14);
-				panelCanciones.add(lblLanzamiento);
+				lblLanzamiento.setBounds(68, 146, 77, 14);
+				contentPanel.add(lblLanzamiento);
 				
 				textVisualizaciones = new JTextField();
-				textVisualizaciones.setBounds(208, 104, 96, 20);
-				panelCanciones.add(textVisualizaciones);
+				textVisualizaciones.setBounds(232, 115, 96, 20);
+				contentPanel.add(textVisualizaciones);
 				textVisualizaciones.setColumns(10);
 				
 				lblVisualizaciones = new JLabel("Visualizaciones");
 				lblVisualizaciones.setForeground(Color.WHITE);
 				lblVisualizaciones.setHorizontalAlignment(SwingConstants.CENTER);
-				lblVisualizaciones.setBounds(218, 79, 77, 14);
-				panelCanciones.add(lblVisualizaciones);
+				lblVisualizaciones.setBounds(242, 90, 77, 14);
+				contentPanel.add(lblVisualizaciones);
 				
 				lblPrecio = new JLabel("Precio");
 				lblPrecio.setForeground(Color.WHITE);
 				lblPrecio.setHorizontalAlignment(SwingConstants.CENTER);
-				lblPrecio.setBounds(229, 23, 47, 14);
-				panelCanciones.add(lblPrecio);
+				lblPrecio.setBounds(253, 34, 47, 14);
+				contentPanel.add(lblPrecio);
 				
 				textPrecio = new JTextField();
-				textPrecio.setBounds(208, 48, 96, 20);
-				panelCanciones.add(textPrecio);
+				textPrecio.setBounds(232, 59, 96, 20);
+				contentPanel.add(textPrecio);
 				textPrecio.setColumns(10);
 				
 				chckbxExplicito = new JCheckBox("Explicito");
 				chckbxExplicito.setForeground(Color.WHITE);
 				chckbxExplicito.setBackground(Color.black);
-				chckbxExplicito.setBounds(208, 159, 97, 23);
-				panelCanciones.add(chckbxExplicito);
-				
-				comboBoxArtista = new JComboBox();
-				comboBoxArtista.setBounds(377, 72, 128, 22);
-				panelCanciones.add(comboBoxArtista);
-				
-				comboBoxDiscografica = new JComboBox();
-				comboBoxDiscografica.setBounds(377, 128, 128, 22);
-				panelCanciones.add(comboBoxDiscografica);
+				chckbxExplicito.setBounds(232, 170, 97, 23);
+				contentPanel.add(chckbxExplicito);
 				
 				lblArtista = new JLabel("Artista");
 				lblArtista.setForeground(Color.WHITE);
 				lblArtista.setHorizontalAlignment(SwingConstants.CENTER);
-				lblArtista.setBounds(401, 48, 72, 14);
-				panelCanciones.add(lblArtista);
+				lblArtista.setBounds(409, 34, 72, 14);
+				contentPanel.add(lblArtista);
+				
+				textArtista = new JTextField();
+				textArtista.setColumns(10);
+				textArtista.setBounds(373, 59, 150, 20);
+				contentPanel.add(textArtista);
 				
 				lblDiscografica = new JLabel("Discogr\u00E1fica");
 				lblDiscografica.setForeground(Color.WHITE);
 				lblDiscografica.setHorizontalAlignment(SwingConstants.CENTER);
-				lblDiscografica.setBounds(401, 107, 72, 14);
-				panelCanciones.add(lblDiscografica);
+				lblDiscografica.setBounds(409, 90, 72, 14);
+				contentPanel.add(lblDiscografica);
 				
-				panelCanciones.setBackground(Color.black);
+				textDiscografica = new JTextField();
+				textDiscografica.setColumns(10);
+				textDiscografica.setBounds(373, 115, 150, 20);
+				contentPanel.add(textDiscografica);
+				
+				JLabel lblImg = new JLabel("");
+				lblImg.setIcon(new ImageIcon(Register.class.getResource(cf.getBackground())));
+				lblImg.setBounds(-769, -188, 1333, 418);
+				contentPanel.add(lblImg);
 				
 				
 			}
-			
-			panelArtistas = new JPanel();
-			panelArtistas.setLayout(null);
-			panelArtistas.setBackground(Color.black);
-			tabbedPane.addTab("Artistas", null, panelArtistas, null);
-			
-			textArtista = new JTextField();
-			textArtista.setColumns(10);
-			textArtista.setBounds(203, 97, 150, 20);
-			panelArtistas.add(textArtista);
-			
-			lblArtista_1 = new JLabel("Artista");
-			lblArtista_1.setForeground(Color.WHITE);
-			lblArtista_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblArtista_1.setBounds(249, 72, 47, 14);
-			panelArtistas.add(lblArtista_1);
-			
-			panelDiscograficas = new JPanel();
-			panelDiscograficas.setForeground(Color.WHITE);
-			panelDiscograficas.setBackground(Color.BLACK);
-			panelDiscograficas.setLayout(null);
-			tabbedPane.addTab("Discograficas", null, panelDiscograficas, null);
-			
-			textDiscografica = new JTextField();
-			textDiscografica.setColumns(10);
-			textDiscografica.setBounds(198, 99, 150, 20);
-			panelDiscograficas.add(textDiscografica);
-			
-			lblDiscografica_1 = new JLabel("Discografica");
-			lblDiscografica_1.setForeground(Color.WHITE);
-			lblDiscografica_1.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDiscografica_1.setBounds(233, 74, 74, 14);
-			panelDiscograficas.add(lblDiscografica_1);
-			
-			panelCeos = new JPanel();
-			panelCeos.setBackground(Color.BLACK);
-			panelCeos.setLayout(null);
-			tabbedPane.addTab("Ceos", null, panelCeos, null);
-			
-			comboBoxDiscograficaCeo = new JComboBox();
-			comboBoxDiscograficaCeo.setBounds(201, 123, 128, 22);
-			panelCeos.add(comboBoxDiscograficaCeo);
-			
-			lblDiscograficaCeos = new JLabel("Discogr\u00E1fica");
-			lblDiscograficaCeos.setForeground(Color.WHITE);
-			lblDiscograficaCeos.setHorizontalAlignment(SwingConstants.CENTER);
-			lblDiscograficaCeos.setBounds(225, 99, 72, 14);
-			panelCeos.add(lblDiscograficaCeos);
-			
-			lblCeo = new JLabel("Ceo");
-			lblCeo.setForeground(Color.WHITE);
-			lblCeo.setHorizontalAlignment(SwingConstants.CENTER);
-			lblCeo.setBounds(236, 30, 47, 14);
-			panelCeos.add(lblCeo);
-			
-			textCeo = new JTextField();
-			textCeo.setBounds(201, 55, 128, 20);
-			panelCeos.add(textCeo);
-			textCeo.setColumns(10);
 			
 		}
 		{
 			buttonPane = new JPanel();
 			buttonPane.setBounds(0, 230, 564, 33);
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			buttonPane.setBackground(new Color(16, 155, 197));
+			buttonPane.setBackground(Color.black);
 			getContentPane().add(buttonPane);
 			{
 				okButton = new JButton("OK");
@@ -303,6 +225,100 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 		
 		if(e.getSource() == cancelButton) {
 			dispose();
+		} else if (e.getSource() == okButton) {
+		
+			LocalDate fech = null;
+			String fs[] = new String[3];
+			long visualizaciones = 0;
+			float pr = 0;
+			boolean expl = false;
+			
+			if(textCancion.getText().isEmpty()) {
+				
+				JOptionPane.showMessageDialog(null, "¡El campo canción esta vacio!", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} else if(textLanzamiento.getText().isEmpty()) {
+				
+				JOptionPane.showMessageDialog(null, "¡El campo lanzamiento esta vacio!", "Error", JOptionPane.ERROR_MESSAGE);
+				
+			} else {
+				
+				try {
+					
+					if(textLanzamiento.getText().contains("-")) {
+						
+						fs = textLanzamiento.getText().split("-");
+						fech = LocalDate.of(Integer.parseInt(fs[2]), Integer.parseInt(fs[1]), Integer.parseInt(fs[0]));
+						
+					} else if(textLanzamiento.getText().contains("/")) {
+						
+						fs = textLanzamiento.getText().split("/");
+						fech = LocalDate.of(Integer.parseInt(fs[2]), Integer.parseInt(fs[1]), Integer.parseInt(fs[0]));
+					
+					} else {
+						
+						JOptionPane.showMessageDialog(null, "Introduzca una fecha valida (DIA-MES-AÑO) o (DIA/MES/AÑO)", "Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+					
+				} catch(Exception ex) {
+					
+					JOptionPane.showMessageDialog(null, "Introduzca una fecha valida (DIA-MES-AÑO) o (DIA/MES/AÑO)", "Error", JOptionPane.ERROR_MESSAGE);
+					
+				}
+				
+				if(!textVisualizaciones.getText().isEmpty()) {
+					try {
+						
+						visualizaciones = Long.parseLong(textVisualizaciones.getText());
+						
+					} catch(Exception ex) {
+						
+						JOptionPane.showMessageDialog(null, "Introduzca solo numeros en las visualizaciones", "Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+				}
+				
+				if(!textPrecio.getText().isEmpty()) {
+					
+					try {
+						
+						if(textPrecio.getText().contains(",")) {
+							
+							textPrecio.setText(textPrecio.getText().replace(',', '.'));
+							
+						}
+						
+						pr = Float.parseFloat(textPrecio.getText());
+						
+					} catch(Exception ex) {
+						
+						JOptionPane.showMessageDialog(null, "Introduzca solo numeros separados por . o , para el precio", "Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+					
+				}
+				
+				if(chckbxExplicito.isSelected()) {
+
+					expl = true;
+					
+				}
+				
+				try {
+					cm.insert(textCancion.getText(), textGenero.getText(), fech, visualizaciones, pr, expl, textArtista.getText(), textDiscografica.getText());
+				} catch (ClassNotFoundException e1) {
+//					e1.printStackTrace();
+					System.out.println("error clase");
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					System.out.println("error sql");
+				}
+				
+			}
+			
+			System.out.println(expl + " " + pr + " " + visualizaciones + " " + fech + " " +  textArtista.getText() + " " + textDiscografica.getText());
+			
 		}
 		
 	}
