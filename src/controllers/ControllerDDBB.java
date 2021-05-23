@@ -41,7 +41,20 @@ public class ControllerDDBB {
 	
 	private ResultSet rs(String tabla) throws SQLException {
 	
-		String consulta = "select * from " + tabla + ";";
+		String consulta;
+		
+		if(tabla.equalsIgnoreCase("Lanzamientos")) {
+			
+			consulta = "select id_cancion,titulo,id_artista,artista from canciones natural join lanzamientos natural join artistas;";
+			
+		} else if(tabla.equalsIgnoreCase("Contratos")) {
+			
+			consulta = "select id_cancion,titulo,id_discografica,discografica from canciones natural join contratos natural join discograficas;";
+			
+		} else {
+			consulta = "select * from " + tabla + ";";
+		}
+		
 		rs = ((java.sql.Statement) bd.getStmt()).executeQuery(consulta);
 		
 		return rs;
@@ -347,18 +360,10 @@ public class ControllerDDBB {
 
 	 ************************************************************ */
 	
-	public void insertar(String cancion,String genero,LocalDate lanzamiento,long visualizaciones,float precio,boolean explicito,String artista,String discografica) throws SQLException {
+	public void insertar(String cancion,String genero,LocalDate lanzamiento,long visualizaciones,float precio,boolean explicito,String artista[],String discografica[]) throws SQLException {
 		
 		PreparedStatement str = null;
 		bd.getConn().setAutoCommit(false);
-		
-		str = bd.getConn().prepareStatement("call comprobar_artista(?);");
-		str.setString(1, artista);
-		str.executeUpdate();
-		
-		str = bd.getConn().prepareStatement("call comprobar_discografica(?);");
-		str.setString(1, discografica);
-		str.executeUpdate();
 		
 		str = bd.getConn().prepareStatement("INSERT INTO canciones (titulo,genero,lanzamiento,visualizaciones,precio,explicito) VALUES (?,?,?,?,?,?);");
 		str.setString(1, cancion);
@@ -369,50 +374,142 @@ public class ControllerDDBB {
 		str.setBoolean(6, explicito);
 		str.executeUpdate();
 		
-		str = bd.getConn().prepareStatement("call ins_contratos(?,?);");
-		str.setString(1, cancion);
-		str.setString(2, discografica);
-		str.executeUpdate();
+		for(String a : artista) {
+			
+			str = bd.getConn().prepareStatement("call comprobar_artista(?);");
+			str.setString(1, a);
+			str.executeUpdate();
+			str = bd.getConn().prepareStatement("call ins_lanzamientos(?,?);");
+			str.setString(1, cancion);
+			str.setString(2, a);
+			str.executeUpdate();
+			
+		}
 		
-		str = bd.getConn().prepareStatement("call ins_lanzamientos(?,?);");
-		str.setString(1, cancion);
-		str.setString(2, artista);
+		for(String d : discografica) {
+			
+			str = bd.getConn().prepareStatement("call comprobar_discografica(?);");
+			str.setString(1, d);
+			str.executeUpdate();
+			str = bd.getConn().prepareStatement("call ins_contratos(?,?);");
+			str.setString(1, cancion);
+			str.setString(2, d);
+			str.executeUpdate();
+			
+		}
+		
+		bd.getConn().commit();
+		
+	}
+	
+	public void borrar(String consulta,int id1,int id2) throws SQLException {
+		
+		PreparedStatement str = null;
+		bd.getConn().setAutoCommit(false);
+		String campo = "";
+		
+		if(consulta.equalsIgnoreCase("Canciones")) {
+			campo = "id_cancion";
+		} else if(consulta.equalsIgnoreCase("Artistas")) {
+			campo = "id_artista";
+		} else if(consulta.equalsIgnoreCase("Discograficas")) {
+			campo = "id_discografica";
+		} else if(consulta.equalsIgnoreCase("Ceos")) {
+			campo = "id_ceo";
+		} else if(consulta.equalsIgnoreCase("Lanzamientos")) {
+			campo = "id_cancion = ? AND id_artista";
+		} else if(consulta.equalsIgnoreCase("Contratos")) {
+			campo = "id_cancion = ? AND id_discografica";
+		} 
+		
+		str = bd.getConn().prepareStatement("DELETE FROM " + consulta + " WHERE " + campo + " = ?;");
+		
+		if(consulta.equalsIgnoreCase("Lanzamientos") || consulta.equalsIgnoreCase("Contratos")) {
+			
+			str.setInt(1, id1);
+			str.setInt(2, id2);
+			
+		} else {
+			
+			str.setInt(1, id1);
+			
+		}
+		
 		str.executeUpdate();
 		
 		bd.getConn().commit();
 		
 	}
 	
-	public void borrar(String consulta,int id) throws SQLException {
-		
+	public void actualizar(String tabla, int id1, int id2,String columnas[],String fila[]) throws SQLException {
+
 		PreparedStatement str = null;
 		bd.getConn().setAutoCommit(false);
-		String campo = "", campo2 = "";	
+		String set = "SET ",campo = "", consulta="",update="UPDATE ";
 		
-		if(consulta.equalsIgnoreCase("Canciones")) {
-			campo = "id_cancion";
-			campo2 = ";";
-		} else if(consulta.equalsIgnoreCase("Artistas")) {
-			campo = "id_artista";
-			campo2 = ";";
-		} else if(consulta.equalsIgnoreCase("Discograficas")) {
-			campo = "id_discografica";
-			campo2 = ";";
-		} else if(consulta.equalsIgnoreCase("Ceos")) {
-			campo = "id_ceo";
-			campo2 = ";";
-		} else if(consulta.equalsIgnoreCase("Lanzamientos")) {
-			campo = "id_cancion";
-			campo2 = ";";
-		} else if(consulta.equalsIgnoreCase("Contratos")) {
-			campo = "id_cancion";
-			campo2 = ";";
+		update += tabla + " ";
+		
+		if(tabla.equalsIgnoreCase("Canciones")) {
+			
+			consulta += columnas[1] + " = ?," + columnas[2] + "= ?," + columnas[3] + "= ?," + columnas[4] + "= ?," + columnas[5] + "=?," + columnas[6] + "=?";
+			campo += "id_cancion = " + id1 + ";";
+		
+		} else if(tabla.equalsIgnoreCase("Artistas")) {
+		
+			consulta += columnas[1] + " = ?";
+			campo = "id_artista = " + id1 + ";";
+		
+		} else if(tabla.equalsIgnoreCase("Discograficas")) {
+		
+			consulta += columnas[1] + " = ?";
+			campo = "id_discografica = " + id1 + ";";
+		
+		} else if(tabla.equalsIgnoreCase("Ceos")) {
+		
+			consulta += columnas[1] + " = ?";
+			campo = "id_ceo = " + id1 + ";";
+		
+		} else if(tabla.equalsIgnoreCase("Lanzamientos")) {
+		
+			consulta += columnas[0] + " = ?," + columnas[2] + " =?";
+			campo = "id_cancion = " + id1 + " AND id_artista = " + id2 + ";";
+		
+		} else if(tabla.equalsIgnoreCase("Contratos")) {
+		
+			consulta += columnas[0] + " = ?," + columnas[2] + " =?";
+			campo = "id_cancion = " + id1 + " AND id_discografica = " + id2 + ";";
+		
 		} 
 		
-		str = bd.getConn().prepareStatement("DELETE FROM " + consulta + " WHERE " + campo + " = ?;");
+		str = bd.getConn().prepareStatement(update + set + consulta + " WHERE " + campo);
 		
-		str.setInt(1, id);
+		if(tabla.equalsIgnoreCase("Canciones")) {
 		
+			str.setString(1, fila[1]);
+			str.setString(2, fila[2]);
+			str.setString(3, fila[3]);
+			str.setLong(4, Long.parseLong(fila[4]));
+			str.setFloat(5, Float.parseFloat(fila[5]));
+			
+			if(fila[6].equals("1")) {
+				str.setBoolean(6, true);	
+			} else {
+				str.setBoolean(6, false);
+			}
+			
+			
+		} else if(tabla.equalsIgnoreCase("Artistas") || tabla.equalsIgnoreCase("Discograficas") || tabla.equalsIgnoreCase("ceos")) {
+			
+			str.setString(1, fila[1]);
+			
+		} else if(tabla.equalsIgnoreCase("Lanzamientos") || tabla.equalsIgnoreCase("Contratos")) {
+			//Arreglar esto
+			str.setInt(1, Integer.parseInt(fila[0]));
+			str.setInt(2, Integer.parseInt(fila[2]));
+		
+		} 
+		
+		System.out.println(str);
 		str.executeUpdate();
 		
 		bd.getConn().commit();
@@ -443,5 +540,6 @@ public class ControllerDDBB {
 		bd.getConn().close();
 		
 	}
+
 	
 }

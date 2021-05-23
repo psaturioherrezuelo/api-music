@@ -13,7 +13,7 @@ import java.awt.event.WindowListener;
 import java.sql.SQLException;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
-public class Register extends JDialog implements WindowListener, ActionListener, MouseListener {
+public class Register extends JFrame implements WindowListener, ActionListener, MouseListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private JButton btnReg, btnCancel;

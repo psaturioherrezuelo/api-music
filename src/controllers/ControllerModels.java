@@ -93,7 +93,7 @@ public class ControllerModels {
 		
 	}
 	
-	public void insert(String cancion,String genero,LocalDate lanzamiento,long visualizaciones,float precio,boolean explicito,String artista,String discografica) throws ClassNotFoundException, SQLException {
+	public void insert(String cancion,String genero,LocalDate lanzamiento,long visualizaciones,float precio,boolean explicito,String artista[],String discografica[]) throws ClassNotFoundException, SQLException {
 		
 		bdc.open();
 		
@@ -102,10 +102,18 @@ public class ControllerModels {
 		
 	}
 	
-	public void delete(String consulta,int id) throws ClassNotFoundException, SQLException {
+	public void delete(String consulta,int id1,int id2) throws ClassNotFoundException, SQLException {
 		
 		bdc.open();
-		bdc.borrar(consulta, id);
+		bdc.borrar(consulta, id1, id2);
+		bdc.close();
+		
+	}
+	
+	public void update(String consulta, int id1, int id2,String fila[]) throws ClassNotFoundException, SQLException {
+		
+		bdc.open();
+		bdc.actualizar(consulta, id1, id2, columnas, fila);
 		bdc.close();
 		
 	}
