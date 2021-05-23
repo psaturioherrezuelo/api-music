@@ -383,6 +383,42 @@ public class ControllerDDBB {
 		
 	}
 	
+	public void borrar(String consulta,int id) throws SQLException {
+		
+		PreparedStatement str = null;
+		bd.getConn().setAutoCommit(false);
+		String campo = "", campo2 = "";	
+		
+		if(consulta.equalsIgnoreCase("Canciones")) {
+			campo = "id_cancion";
+			campo2 = ";";
+		} else if(consulta.equalsIgnoreCase("Artistas")) {
+			campo = "id_artista";
+			campo2 = ";";
+		} else if(consulta.equalsIgnoreCase("Discograficas")) {
+			campo = "id_discografica";
+			campo2 = ";";
+		} else if(consulta.equalsIgnoreCase("Ceos")) {
+			campo = "id_ceo";
+			campo2 = ";";
+		} else if(consulta.equalsIgnoreCase("Lanzamientos")) {
+			campo = "id_cancion";
+			campo2 = ";";
+		} else if(consulta.equalsIgnoreCase("Contratos")) {
+			campo = "id_cancion";
+			campo2 = ";";
+		} 
+		
+		str = bd.getConn().prepareStatement("DELETE FROM " + consulta + " WHERE " + campo + " = ?;");
+		
+		str.setInt(1, id);
+		
+		str.executeUpdate();
+		
+		bd.getConn().commit();
+		
+	}
+	
 	/* ************************************************************
 	  
 		Conexion y cierre de la BBDD

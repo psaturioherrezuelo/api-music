@@ -10,6 +10,7 @@ import java.util.Arrays;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controllers.ControllerDDBB;
@@ -47,7 +48,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 	private JComboBox selector;
 	private JLabel imgBackground1;
 	private JLabel imgBackground2;
-	private JButton btnInsert;
+	private JButton btnInsert,btnDelete;
 	private String columnas[], datos[][],consulta = "canciones";;
 	
 	ControllerModels cm = new ControllerModels();
@@ -111,9 +112,14 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		panel_1.add(imgBackground1);
 		
 		btnInsert = new JButton("Insertar");
-		btnInsert.setBounds(833, 144, 89, 23);
+		btnInsert.setBounds(833, 110, 89, 23);
 		btnInsert.addActionListener(this);
 		contentPane.add(btnInsert);
+		
+		btnDelete = new JButton("Borrar");
+		btnDelete.setBounds(833, 144, 89, 23);
+		btnDelete.addActionListener(this);
+		contentPane.add(btnDelete);
 		
 		JLabel imgBackground2 = new JLabel("");
 		imgBackground2.setIcon(new ImageIcon(Login.class.getResource(cf.getBackground())));
@@ -174,6 +180,29 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			
 			Insertar ins = new Insertar();
 			ins.setVisible(true);
+			
+		} else if(e.getSource() == btnDelete) {
+			
+			int id;
+			
+			try {
+				
+				consulta = selector.getSelectedItem().toString();
+				id = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
+				
+				System.out.println(consulta);
+				System.out.println(id);
+				
+				cm.delete(consulta, id);
+				tabla(consulta);
+				
+			} catch (ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			} catch (ArrayIndexOutOfBoundsException e1) {
+				System.out.println("Seleccione un elemento");
+			}
 			
 		}
 		

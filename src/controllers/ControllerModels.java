@@ -102,6 +102,14 @@ public class ControllerModels {
 		
 	}
 	
+	public void delete(String consulta,int id) throws ClassNotFoundException, SQLException {
+		
+		bdc.open();
+		bdc.borrar(consulta, id);
+		bdc.close();
+		
+	}
+	
 	
 	
 	/* ********************************************************************************
