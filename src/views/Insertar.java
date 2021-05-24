@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +11,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -20,21 +18,16 @@ import javax.swing.border.EmptyBorder;
 import controllers.ControllerFiles;
 import controllers.ControllerModels;
 
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.ImageIcon;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.Toolkit;
 
-import javax.swing.UIManager;
-
-public class Insertar extends JDialog implements WindowListener, ActionListener, MouseListener {
+public class Insertar extends JFrame implements WindowListener, ActionListener, MouseListener {
 
 	private final JPanel contentPanel = new JPanel();
 	private ControllerModels cm = new ControllerModels();
@@ -52,8 +45,6 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 	private JLabel lblPrecio;
 	private JTextField textPrecio;
 	private JCheckBox chckbxExplicito;
-	private JComboBox comboBoxArtista;
-	private JComboBox comboBoxDiscografica;
 	private JLabel lblArtista;
 	private JTextField textArtista;
 	private JLabel lblDiscografica;
@@ -61,9 +52,8 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 	
 	/*Panel Botones*/
 	private JPanel buttonPane;
-	private JButton okButton;
-	private JButton cancelButton;
-	private JLabel lblNewLabel;
+	private JButton insertButton;
+	private JButton cancelarButton;
 	
 	public Insertar() {
 		setBounds(100, 100, 578, 299);
@@ -138,7 +128,7 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 				
 				chckbxExplicito = new JCheckBox("Explicito");
 				chckbxExplicito.setForeground(Color.WHITE);
-				chckbxExplicito.setBackground(Color.black);
+				chckbxExplicito.setBackground(new Color(70, 130, 180));
 				chckbxExplicito.setBounds(232, 170, 97, 23);
 				contentPanel.add(chckbxExplicito);
 				
@@ -180,17 +170,17 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 			buttonPane.setBackground(Color.black);
 			getContentPane().add(buttonPane);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				okButton.addActionListener(this);
-				getRootPane().setDefaultButton(okButton);
+				insertButton = new JButton("Insertar");
+				insertButton.setActionCommand("OK");
+				buttonPane.add(insertButton);
+				insertButton.addActionListener(this);
+				getRootPane().setDefaultButton(insertButton);
 			}
 			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				cancelButton.addActionListener(this);
-				buttonPane.add(cancelButton);
+				cancelarButton = new JButton("Cancelar");
+				cancelarButton.setActionCommand("Cancel");
+				cancelarButton.addActionListener(this);
+				buttonPane.add(cancelarButton);
 			}
 		}
 	}
@@ -223,9 +213,14 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		if(e.getSource() == cancelButton) {
+		String artistas[], discograficas[];
+		
+		
+		if(e.getSource() == cancelarButton) {
 			dispose();
-		} else if (e.getSource() == okButton) {
+			Aplicacion app = new Aplicacion("Canciones");
+			app.setVisible(true);
+		} else if (e.getSource() == insertButton) {
 		
 			LocalDate fech = null;
 			String fs[] = new String[3];
@@ -243,7 +238,7 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 				
 			} else {
 				
-				try {
+try {
 					
 					if(textLanzamiento.getText().contains("-")) {
 						
@@ -306,18 +301,28 @@ public class Insertar extends JDialog implements WindowListener, ActionListener,
 				}
 				
 				try {
-					cm.insert(textCancion.getText(), textGenero.getText(), fech, visualizaciones, pr, expl, textArtista.getText(), textDiscografica.getText());
+					artistas =  textArtista.getText().split(",");
+					discograficas = textDiscografica.getText().split(",");
+					cm.insert(textCancion.getText(), textGenero.getText(), fech, visualizaciones, pr, expl, artistas, discograficas);
+					JOptionPane.showMessageDialog(null, "¡Campos insertados!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+					textArtista.setText("");
+					textDiscografica.setText("");
+					textCancion.setText("");
+					textGenero.setText("");
+					textLanzamiento.setText("");
+					textPrecio.setText("");
+					textVisualizaciones.setText("");
+					chckbxExplicito.setSelected(false);
+					
 				} catch (ClassNotFoundException e1) {
-//					e1.printStackTrace();
 					System.out.println("error clase");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "¡Campos Duplicados!", "Error", JOptionPane.ERROR_MESSAGE);
 					System.out.println("error sql");
 				}
 				
 			}
-			
-			System.out.println(expl + " " + pr + " " + visualizaciones + " " + fech + " " +  textArtista.getText() + " " + textDiscografica.getText());
 			
 		}
 		
