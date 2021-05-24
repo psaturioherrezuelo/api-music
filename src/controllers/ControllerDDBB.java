@@ -43,6 +43,8 @@ public class ControllerDDBB {
 	
 		String consulta;
 		
+		tabla = tabla.toLowerCase();
+		
 		if(tabla.equalsIgnoreCase("Lanzamientos")) {
 			
 			consulta = "select id_cancion,titulo,id_artista,artista from canciones natural join lanzamientos natural join artistas;";
@@ -51,8 +53,14 @@ public class ControllerDDBB {
 			
 			consulta = "select id_cancion,titulo,id_discografica,discografica from canciones natural join contratos natural join discograficas;";
 			
+		} else if (tabla.equalsIgnoreCase("Ceos")){
+			
+			consulta = "select id_ceo,ceo,id_discografica,discografica from ceos natural join discograficas;";
+			
 		} else {
+			
 			consulta = "select * from " + tabla + ";";
+		
 		}
 		
 		rs = ((java.sql.Statement) bd.getStmt()).executeQuery(consulta);
@@ -407,6 +415,7 @@ public class ControllerDDBB {
 		PreparedStatement str = null;
 		bd.getConn().setAutoCommit(false);
 		String campo = "";
+		consulta = consulta.toLowerCase();
 		
 		if(consulta.equalsIgnoreCase("Canciones")) {
 			campo = "id_cancion";
@@ -447,6 +456,7 @@ public class ControllerDDBB {
 		bd.getConn().setAutoCommit(false);
 		String set = "SET ",campo = "", consulta="",update="UPDATE ";
 		
+		tabla = tabla.toLowerCase();
 		update += tabla + " ";
 		
 		if(tabla.equalsIgnoreCase("Canciones")) {
@@ -509,7 +519,7 @@ public class ControllerDDBB {
 		
 		} 
 		
-		System.out.println(str);
+//		System.out.println(str);
 		str.executeUpdate();
 		
 		bd.getConn().commit();

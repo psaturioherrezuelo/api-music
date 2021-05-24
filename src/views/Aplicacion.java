@@ -18,6 +18,9 @@ import controllers.ControllerFiles;
 import controllers.ControllerModels;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
+
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
@@ -37,6 +40,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 
@@ -134,11 +138,6 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		selector.addActionListener(this);
 		contentPane.add(selector);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 932, 46);
-		panel.setBackground(Color.black);
-		contentPane.add(panel);
-		
 		btnInsert = new JButton("Insertar");
 		btnInsert.setBounds(367, 177, 89, 23);
 		btnInsert.addActionListener(this);
@@ -156,7 +155,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		
 		JLabel imgBackground2 = new JLabel("");
 		imgBackground2.setIcon(new ImageIcon(Login.class.getResource(cf.getBackground())));
-		imgBackground2.setBounds(0, 0, 932, 462);
+		imgBackground2.setBounds(-514, -257, 1458, 673);
 		contentPane.add(imgBackground2);
 		
 	}
@@ -231,6 +230,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 				}
 				
 				cm.delete(consulta, id1,id2);
+				JOptionPane.showMessageDialog(null, "¡Campos eliminados!", "Exito", JOptionPane.INFORMATION_MESSAGE);
 				tabla(consulta);
 				
 			} catch (ClassNotFoundException e1) {
@@ -238,7 +238,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			} catch (ArrayIndexOutOfBoundsException e1) {
-				System.out.println("Seleccione un elemento");
+				JOptionPane.showMessageDialog(null, "¡Ningun elemento seleccionado!", "Seleccione un elemento", JOptionPane.ERROR_MESSAGE);
 			}
 			
 		} else if(e.getSource() == btnUpdate) {
@@ -254,6 +254,16 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 					
 					id2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
 					
+				} else if(consulta.equalsIgnoreCase("Canciones")) {
+					
+					if(table.getValueAt(table.getSelectedRow(), fila.length-1).equals("0") || table.getValueAt(table.getSelectedRow(), fila.length-1).equals("1")) {
+						
+					} else {
+						
+						throw new NullPointerException();
+						
+					}
+					
 				}
 				
 				for(int i=0; i<table.getColumnCount(); i++) {
@@ -262,16 +272,23 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 					
 				}
 				
+				
+				
 				cm.update(consulta, id1,id2,fila);
+				JOptionPane.showMessageDialog(null, "¡Campos actualizados!", "Exito", JOptionPane.INFORMATION_MESSAGE);
 				tabla(consulta);
 				
 			} catch (ClassNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (SQLException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "¡Introduzca una fecha valida!", "Error", JOptionPane.ERROR_MESSAGE);
 			} catch (ArrayIndexOutOfBoundsException e1) {
-				System.out.println("Seleccione un elemento");
-			}
+				JOptionPane.showMessageDialog(null, "¡Ningun elemento seleccionado!", "Seleccione un elemento", JOptionPane.ERROR_MESSAGE);
+			} catch (NumberFormatException e1) {
+				JOptionPane.showMessageDialog(null, "¡Introduzca solo numeros en los campos visualizaciones y precio (este ultimo separados los decimales por .)!", "Error", JOptionPane.ERROR_MESSAGE);
+			} catch (NullPointerException e1) {
+				JOptionPane.showMessageDialog(null, "¡Introduzca unicamente 0 para no o 1 para si en explicito!", "Error", JOptionPane.ERROR_MESSAGE);
+			} 
 			
 		}
 		

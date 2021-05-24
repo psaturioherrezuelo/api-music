@@ -238,7 +238,7 @@ public class Insertar extends JFrame implements WindowListener, ActionListener, 
 				
 			} else {
 				
-				try {
+try {
 					
 					if(textLanzamiento.getText().contains("-")) {
 						
@@ -304,10 +304,21 @@ public class Insertar extends JFrame implements WindowListener, ActionListener, 
 					artistas =  textArtista.getText().split(",");
 					discograficas = textDiscografica.getText().split(",");
 					cm.insert(textCancion.getText(), textGenero.getText(), fech, visualizaciones, pr, expl, artistas, discograficas);
+					JOptionPane.showMessageDialog(null, "¡Campos insertados!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+					textArtista.setText("");
+					textDiscografica.setText("");
+					textCancion.setText("");
+					textGenero.setText("");
+					textLanzamiento.setText("");
+					textPrecio.setText("");
+					textVisualizaciones.setText("");
+					chckbxExplicito.setSelected(false);
+					
 				} catch (ClassNotFoundException e1) {
 					System.out.println("error clase");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "¡Campos Duplicados!", "Error", JOptionPane.ERROR_MESSAGE);
 					System.out.println("error sql");
 				}
 				

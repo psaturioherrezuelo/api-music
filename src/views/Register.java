@@ -218,7 +218,7 @@ public class Register extends JFrame implements WindowListener, ActionListener, 
 					try {
 						
 						cm.register(textUser.getText(),textPass.getText(),textNombre.getText(),textApellidos.getText(),textEmail.getText(),textDireccion.getText());
-						JOptionPane.showMessageDialog(null, "¡Registro completado con exito!", "¡Completado!", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "¡Registro completado con exito!", "¡Completado!", JOptionPane.INFORMATION_MESSAGE);
 						pasarCampos();
 						dispose();
 						
