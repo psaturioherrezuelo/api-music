@@ -65,7 +65,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlack())));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlue())));
 		setResizable(false);
 		setTitle("Api Music");	
 		setLocationRelativeTo(null);
@@ -109,8 +109,6 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 	    /*}*/;
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		
-		
 		try {
 			
 			tabla(consulta);
@@ -139,12 +137,12 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		contentPane.add(selector);
 		
 		btnInsert = new JButton("Insertar");
-		btnInsert.setBounds(367, 177, 89, 23);
+		btnInsert.setBounds(347, 178, 89, 23);
 		btnInsert.addActionListener(this);
 		contentPane.add(btnInsert);
 		
 		btnUpdate = new JButton("Actualizar");
-		btnUpdate.setBounds(466, 177, 89, 23);
+		btnUpdate.setBounds(446, 178, 109, 23);
 		btnUpdate.addActionListener(this);
 		contentPane.add(btnUpdate);
 		
@@ -153,10 +151,17 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		btnDelete.addActionListener(this);
 		contentPane.add(btnDelete);
 		
+		JLabel lblImgLogo = new JLabel("");
+		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource(cf.getLogoWhite())));
+		lblImgLogo.setBounds(379, -3, 250, 217);
+		contentPane.add(lblImgLogo);
+		
 		JLabel imgBackground2 = new JLabel("");
 		imgBackground2.setIcon(new ImageIcon(Login.class.getResource(cf.getBackground())));
 		imgBackground2.setBounds(-514, -257, 1458, 673);
 		contentPane.add(imgBackground2);
+		
+		
 		
 	}
 
@@ -212,7 +217,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			
 			dispose();
 			Insertar ins = new Insertar();
-			ins.setVisible(true);
+		
 			
 		} else if(e.getSource() == btnDelete) {
 			
@@ -378,5 +383,4 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
     	}
     	return cnd;
     }
-	
 }

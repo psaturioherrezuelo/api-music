@@ -16,7 +16,7 @@ END ;
 /* Procedimientos para insertar en las interrelaciones desde java */
 CREATE PROCEDURE ins_lanzamientos(IN song VARCHAR (80),IN art VARCHAR (80))
 BEGIN
-
+	
 	DECLARE idart INT (15);
 	DECLARE idsong INT (15);
 
@@ -29,7 +29,7 @@ END ;
 
 CREATE PROCEDURE ins_contratos(IN song VARCHAR (80),IN disc VARCHAR (80))
 BEGIN
-
+	
 	DECLARE iddisc INT (15);
 	DECLARE idsong INT (15);
 
@@ -53,7 +53,7 @@ BEGIN
 	UPDATE artistas
 	SET 
 		vis_artista = (SELECT visualizaciones_artista(art)),
-		total_canc_a = (select canciones_artista(art))
+		total_canc_a = (SELECT canciones_artista(art))
 	WHERE id_artista = art;
 
 END ;
@@ -79,7 +79,7 @@ BEGIN
 	DECLARE cant INT (15);
 	
 	SELECT COUNT(*) INTO cant
-	FROM canciones natural join lanzamientos NATURAL JOIN artistas
+	FROM lanzamientos NATURAL JOIN artistas
 	WHERE id_artista = id;
 	
 	RETURN cant;
@@ -96,6 +96,10 @@ BEGIN
 	FROM canciones NATURAL JOIN lanzamientos NATURAL JOIN artistas
 	WHERE canciones.id_cancion = lanzamientos.id_cancion AND lanzamientos.id_artista = id
 	GROUP BY id_artista;
+	
+	IF vis IS NULL THEN
+		SET VIS=0;
+	END IF;
 	
 	RETURN vis;
 
@@ -114,7 +118,7 @@ BEGIN
 	UPDATE discograficas
 	SET 
 		vis_discografica = (SELECT visualizaciones_discografica(disc)),
-		total_canc_d = (select canciones_discografica(disc))
+		total_canc_d = (SELECT canciones_discografica(disc))
 	WHERE id_discografica = disc;
 
 END ;
@@ -140,7 +144,7 @@ BEGIN
 	DECLARE cant INT (15);
 	
 	SELECT COUNT(*) INTO cant
-	FROM canciones natural join contratos NATURAL JOIN discograficas
+	FROM contratos NATURAL JOIN discograficas
 	WHERE id_discografica = id;
 	
 	RETURN cant;
@@ -158,6 +162,10 @@ BEGIN
 	WHERE canciones.id_cancion = contratos.id_cancion AND contratos.id_discografica = id
 	GROUP BY id_discografica;
 	
+	IF(ISNULL(vis))THEN
+		SET VIS=0;
+	END IF;
+
 	RETURN vis;
 
 END ;
@@ -197,7 +205,7 @@ CREATE TRIGGER tr_insert_artista AFTER INSERT ON lanzamientos FOR EACH ROW
 BEGIN
 
 	DECLARE art int;
-	SET art = (SELECT id_artista FROM lanzamientos WHERE id_artista = NEW.id_artista group by id_artista);
+	SET art = (SELECT id_artista FROM artistas WHERE id_artista = NEW.id_artista);
 	
 	CALL calcular_artista(art);
 
@@ -209,10 +217,22 @@ BEGIN
 
 	DECLARE art int;
 	
-	SET art = (SELECT id_artista FROM lanzamientos WHERE id_artista = OLD.id_artista GROUP BY id_artista);
+	SET art = (SELECT id_artista FROM artistas WHERE id_artista = OLD.id_artista);
 	CALL calcular_artista(art);
 	
-	SET art = (SELECT id_artista FROM lanzamientos WHERE id_artista = NEW.id_artista GROUP BY id_artista);
+	SET art = (SELECT id_artista FROM artistas WHERE id_artista = NEW.id_artista);
+	CALL calcular_artista(art);
+
+END ;
+
+/* Actualizar la discografica despues de borrar */
+CREATE TRIGGER tr_delete_artista AFTER DELETE ON lanzamientos FOR EACH ROW
+BEGIN
+
+	DECLARE art INT(15);
+	
+	SET art = (SELECT id_artista FROM artistas WHERE id_artista = OLD.id_artista);
+	
 	CALL calcular_artista(art);
 
 END ;
@@ -222,7 +242,7 @@ CREATE TRIGGER tr_insert_discografica AFTER INSERT ON contratos FOR EACH ROW
 BEGIN
 
 	DECLARE disc int;
-	SET disc = (SELECT id_discografica FROM contratos WHERE id_discografica = NEW.id_discografica GROUP BY id_discografica);
+	SET disc = (SELECT id_discografica FROM discograficas WHERE id_discografica = NEW.id_discografica);
 	
 	CALL calcular_discografica(disc);
 
@@ -234,14 +254,26 @@ BEGIN
 
 	DECLARE disc INT(15);
 	
-	SET disc = (SELECT id_discografica FROM contratos WHERE id_discografica = OLD.id_discografica GROUP BY id_discografica);
+	SET disc = (SELECT id_discografica FROM discograficas WHERE id_discografica = OLD.id_discografica);
 	
 	CALL calcular_discografica(disc);
 	
-	SET disc = (SELECT id_discografica FROM contratos WHERE id_discografica = NEW.id_discografica GROUP BY id_discografica);
+	SET disc = (SELECT id_discografica FROM discograficas WHERE id_discografica = NEW.id_discografica);
 	
 	CALL calcular_discografica(disc);
 	
+END ;
+
+/* Actualizar la discografica despues de borrar */
+CREATE TRIGGER tr_delete_discografica AFTER DELETE ON contratos FOR EACH ROW
+BEGIN
+
+	DECLARE disc INT(15);
+	
+	SET disc = (SELECT id_discografica FROM discograficas WHERE id_discografica = OLD.id_discografica);
+	
+	CALL calcular_discografica(disc);
+
 END ;
 
 /*

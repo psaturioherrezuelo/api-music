@@ -53,7 +53,7 @@ public class Register extends JFrame implements WindowListener, ActionListener, 
 	public Register() {
 		setBackground(Color.BLACK);
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Register.class.getResource(cf.getIconoBlack())));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlue())));
 		setResizable(false);
 		setTitle("Register Api Music");
 		
@@ -159,7 +159,7 @@ public class Register extends JFrame implements WindowListener, ActionListener, 
 		{
 			lblLogoImg = new JLabel("");
 			lblLogoImg.setIcon(new ImageIcon(Register.class.getResource(cf.getLogoWhite())));
-			lblLogoImg.setBounds(450, 69, 250, 235);
+			lblLogoImg.setBounds(475, 83, 250, 235);
 			contentPanel.add(lblLogoImg);
 		}
 		

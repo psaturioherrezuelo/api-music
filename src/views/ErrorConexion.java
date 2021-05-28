@@ -28,12 +28,12 @@ public class ErrorConexion extends JFrame implements WindowListener, ActionListe
 
 	public ErrorConexion(String Error) {
 		setBackground(new Color(0, 0, 0));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ErrorConexion.class.getResource(cf.getIconoBlack())));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlue())));
 		setResizable(false);
 		setTitle("Login Api Music Error Base de datos");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 120);
+		setBounds(100, 100, 800, 226);
 		contentPane = new JPanel();
 		
 		contentPane.setBackground(new Color(217, 37, 17));
@@ -44,7 +44,7 @@ public class ErrorConexion extends JFrame implements WindowListener, ActionListe
 		JLabel lblUser = new JLabel(Error);
 		lblUser.setForeground(new Color(255, 255, 255));
 		lblUser.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUser.setBounds(-100, -10, 990, 100);
+		lblUser.setBounds(0, 0, 796, 199);
 		contentPane.add(lblUser);
 		
 		this.setLocationRelativeTo(null);

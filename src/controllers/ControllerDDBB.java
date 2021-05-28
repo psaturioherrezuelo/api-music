@@ -47,11 +47,11 @@ public class ControllerDDBB {
 		
 		if(tabla.equalsIgnoreCase("Lanzamientos")) {
 			
-			consulta = "select id_cancion,titulo,id_artista,artista from canciones natural join lanzamientos natural join artistas;";
+			consulta = "select id_cancion,titulo,id_artista,artista from canciones natural join lanzamientos natural join artistas order by id_cancion;";
 			
 		} else if(tabla.equalsIgnoreCase("Contratos")) {
 			
-			consulta = "select id_cancion,titulo,id_discografica,discografica from canciones natural join contratos natural join discograficas;";
+			consulta = "select id_cancion,titulo,id_discografica,discografica from canciones natural join contratos natural join discograficas order by id_cancion;";
 			
 		} else if (tabla.equalsIgnoreCase("Ceos")){
 			
@@ -402,6 +402,7 @@ public class ControllerDDBB {
 			str = bd.getConn().prepareStatement("call ins_contratos(?,?);");
 			str.setString(1, cancion);
 			str.setString(2, d);
+			System.out.println(d);
 			str.executeUpdate();
 			
 		}

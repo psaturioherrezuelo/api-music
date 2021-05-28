@@ -63,7 +63,7 @@ CREATE TABLE ceos (
 	id_ceo INT (15) PRIMARY KEY AUTO_INCREMENT,
 	ceo VARCHAR (80),
 	id_discografica INT (15),
-	FOREIGN KEY (id_discografica) REFERENCES discograficas (id_discografica) ON UPDATE CASCADE,
+	FOREIGN KEY (id_discografica) REFERENCES discograficas (id_discografica) ON UPDATE CASCADE ON DELETE CASCADE,
 	UNIQUE KEY (id_discografica)
 	
 );

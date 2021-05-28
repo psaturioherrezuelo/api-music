@@ -41,7 +41,7 @@ public class Login extends JFrame implements WindowListener, ActionListener, Mou
 
 	public Login() {
 		setBackground(new Color(0, 0, 0));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlack())));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlue())));
 		setResizable(false);
 		setTitle("Login Api Music");		
 		

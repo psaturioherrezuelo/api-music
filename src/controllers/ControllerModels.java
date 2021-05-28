@@ -68,6 +68,36 @@ public class ControllerModels {
 		
 	}
 	
+	public String[] cancs() throws SQLException, ClassNotFoundException {
+		
+		bdc.open();
+		bdc.leerCanciones(listaCanciones);
+		bdc.close();
+		String canciones[] = new String[listaCanciones.size()];
+		int cont = 0;
+		for(Cancion c : listaCanciones) {
+			canciones[cont] = c.getTitulo();
+			cont++;
+		}
+		
+		return canciones;
+	}
+	
+	public String[] arts() throws SQLException, ClassNotFoundException {
+		
+		bdc.open();
+		bdc.leerArtistas(listaArtistas);
+		bdc.close();
+		String arts[] = new String[listaArtistas.size()];
+		int cont = 0;
+		for(Artista a : listaArtistas) {
+			arts[cont] = a.getNombre();
+			cont++;
+		}
+		
+		return arts;
+	}
+	
 	/* ********************************************************************************
 
 					Metodos para buscar e insertar en la BBDD
