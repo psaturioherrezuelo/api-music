@@ -2,7 +2,7 @@ package models;
 
 /* ******************************************************************************
 
-		Modelo de Interrelacion entre Canciones y Artistas (Relacionar)
+		Modelo de Interrelacion entre Canciones y Artistas (Lanzamientos)
 
 ****************************************************************************** */
 
