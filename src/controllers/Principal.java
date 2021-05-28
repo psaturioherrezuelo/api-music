@@ -28,7 +28,7 @@ public class Principal {
 					bd.conexion();
 					
 					try {
-						//Lamamos a la ventana de Login
+						//Llamamos a la ventana de Login
 						Login frame = new Login();
 						frame.setVisible(true);
 					} catch (Exception e) {

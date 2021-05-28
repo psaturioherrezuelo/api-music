@@ -68,6 +68,51 @@ public class ControllerModels {
 		
 	}
 	
+	public String[] cancs() throws SQLException, ClassNotFoundException {
+		
+		bdc.open();
+		bdc.leerCanciones(listaCanciones);
+		bdc.close();
+		String canciones[] = new String[listaCanciones.size()];
+		int cont = 0;
+		for(Cancion c : listaCanciones) {
+			canciones[cont] = c.getTitulo();
+			cont++;
+		}
+		
+		return canciones;
+	}
+	
+	public String[] arts() throws SQLException, ClassNotFoundException {
+		
+		bdc.open();
+		bdc.leerArtistas(listaArtistas);
+		bdc.close();
+		String arts[] = new String[listaArtistas.size()];
+		int cont = 0;
+		for(Artista a : listaArtistas) {
+			arts[cont] = a.getNombre();
+			cont++;
+		}
+		
+		return arts;
+	}
+	
+	public String[] discs() throws SQLException, ClassNotFoundException {
+		
+		bdc.open();
+		bdc.leerDiscograficas(listaDiscograficas);;
+		bdc.close();
+		String discs[] = new String[listaDiscograficas.size()];
+		int cont = 0;
+		for(Discografica d : listaDiscograficas) {
+			discs[cont] = d.getDiscografica();
+			cont++;
+		}
+		
+		return discs;
+	}
+	
 	/* ********************************************************************************
 
 					Metodos para buscar e insertar en la BBDD
@@ -114,6 +159,14 @@ public class ControllerModels {
 		
 		bdc.open();
 		bdc.actualizar(consulta, id1, id2, columnas, fila);
+		bdc.close();
+		
+	}
+	
+	public void relacion(String tabla, String a, String b) throws ClassNotFoundException, SQLException {
+		
+		bdc.open();
+		bdc.insertar(tabla, a, b);
 		bdc.close();
 		
 	}

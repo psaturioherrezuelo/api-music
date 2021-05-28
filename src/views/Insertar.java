@@ -56,17 +56,21 @@ public class Insertar extends JFrame implements WindowListener, ActionListener, 
 	private JButton cancelarButton;
 	
 	public Insertar() {
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 578, 299);
 		getContentPane().setLayout(null);
+		addWindowListener(this);
 		contentPanel.setBounds(0, 0, 564, 230);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
 		contentPanel.setBackground(new Color(16, 155, 197));
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlack())));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlue())));
 		setResizable(false);
-		setTitle("Insertar datos en Api Music");	
+		setTitle("Insertar datos Api Music");	
 		setLocationRelativeTo(null);
+		setVisible(true);
 		
 		{
 			{
@@ -238,7 +242,7 @@ public class Insertar extends JFrame implements WindowListener, ActionListener, 
 				
 			} else {
 				
-try {
+					try {
 					
 					if(textLanzamiento.getText().contains("-")) {
 						
@@ -336,11 +340,15 @@ try {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		
+		Aplicacion a = new Aplicacion("canciones");
+		a.setVisible(true);
+		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
 		
+	
 	}
 
 	@Override
@@ -362,4 +370,5 @@ try {
 	public void windowDeactivated(WindowEvent e) {
 		
 	}
+	
 }

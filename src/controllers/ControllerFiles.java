@@ -2,16 +2,18 @@ package controllers;
 
 public class ControllerFiles {
 
-	private String iconoBlack, logoBlack, iconoWhite, logoWhite, background;
-	
+	private String iconoBlack, iconoBlue, logoBlack, iconoWhite, logoWhite, logoBlue, background;
+
 	public ControllerFiles() {
 		
 		iconoBlack = "/images/icono-apimusic-black.png";
+		iconoBlue = "/images/iconoBlue.png";
 		logoBlack = "/images/logo-apimusic-250px-black.png";
 		iconoWhite = "/images/";
 		logoWhite = "/images/logo-apimusic-250px-white.png";
 //		background = "/images/background1.jpg";
 		background = "/images/bg-filtrado.png";
+		logoBlue = "/images/logo-apimusic-250px-blue.png";
 		
 	}
 
@@ -53,6 +55,22 @@ public class ControllerFiles {
 
 	public void setLogoWhite(String logoWhite) {
 		this.logoWhite = logoWhite;
+	}
+	
+	public String getLogoBlue() {
+		return logoBlue;
+	}
+
+	public void setLogoBlue(String logoBlue) {
+		this.logoBlue = logoBlue;
+	}
+
+	public String getIconoBlue() {
+		return iconoBlue;
+	}
+
+	public void setIconoBlue(String iconoBlue) {
+		this.iconoBlue = iconoBlue;
 	}
 	
 }
