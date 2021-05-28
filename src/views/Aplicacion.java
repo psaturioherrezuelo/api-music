@@ -117,7 +117,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		selector.addItem("Artistas");
 		selector.addItem("Discograficas");
 		selector.addItem("Ceos");
-		selector.addItem("Relacionar");
+		selector.addItem("Lanzamientos");
 		selector.addItem("Contratos");
 		selector.addActionListener(this);
 		contentPane.add(selector);
@@ -218,7 +218,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 				consulta = selector.getSelectedItem().toString();
 				id1 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 				
-				if(consulta.equalsIgnoreCase("Relacionar") || consulta.equalsIgnoreCase("Contratos")) {
+				if(consulta.equalsIgnoreCase("Lanzamientos") || consulta.equalsIgnoreCase("Contratos")) {
 					
 					id2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
 					
@@ -245,7 +245,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 				consulta = selector.getSelectedItem().toString();
 				id1 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 				
-				if(consulta.equalsIgnoreCase("Relacionar") || consulta.equalsIgnoreCase("Contratos")) {
+				if(consulta.equalsIgnoreCase("Lanzamientos") || consulta.equalsIgnoreCase("Contratos")) {
 					
 					id2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
 					

@@ -45,7 +45,7 @@ public class ControllerDDBB {
 		
 		tabla = tabla.toLowerCase();
 		
-		if(tabla.equalsIgnoreCase("Relacionar")) {
+		if(tabla.equalsIgnoreCase("Lanzamientos")) {
 			
 			consulta = "select id_cancion,titulo,id_artista,artista from canciones natural join lanzamientos natural join artistas order by id_cancion;";
 			
@@ -407,7 +407,7 @@ public class ControllerDDBB {
 			campo = "id_discografica";
 		} else if(consulta.equalsIgnoreCase("Ceos")) {
 			campo = "id_ceo";
-		} else if(consulta.equalsIgnoreCase("Relacionar")) {
+		} else if(consulta.equalsIgnoreCase("Lanzamientos")) {
 			campo = "id_cancion = ? AND id_artista";
 		} else if(consulta.equalsIgnoreCase("Contratos")) {
 			campo = "id_cancion = ? AND id_discografica";
@@ -415,7 +415,7 @@ public class ControllerDDBB {
 		
 		str = bd.getConn().prepareStatement("DELETE FROM " + consulta + " WHERE " + campo + " = ?;");
 		
-		if(consulta.equalsIgnoreCase("Relacionar") || consulta.equalsIgnoreCase("Contratos")) {
+		if(consulta.equalsIgnoreCase("Lanzamientos") || consulta.equalsIgnoreCase("Contratos")) {
 			
 			str.setInt(1, id1);
 			str.setInt(2, id2);
@@ -461,7 +461,7 @@ public class ControllerDDBB {
 			consulta += columnas[1] + " = ?";
 			campo = "id_ceo = " + id1 + ";";
 		
-		} else if(tabla.equalsIgnoreCase("Relacionar")) {
+		} else if(tabla.equalsIgnoreCase("Lanzamientos")) {
 		
 			consulta += columnas[0] + " = ?," + columnas[2] + " =?";
 			campo = "id_cancion = " + id1 + " AND id_artista = " + id2 + ";";
@@ -494,8 +494,8 @@ public class ControllerDDBB {
 			
 			str.setString(1, fila[1]);
 			
-		} else if(tabla.equalsIgnoreCase("Relacionar") || tabla.equalsIgnoreCase("Contratos")) {
-			//Arreglar esto
+		} else if(tabla.equalsIgnoreCase("Lanzamientos") || tabla.equalsIgnoreCase("Contratos")) {
+			
 			str.setInt(1, Integer.parseInt(fila[0]));
 			str.setInt(2, Integer.parseInt(fila[2]));
 		
