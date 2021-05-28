@@ -98,6 +98,21 @@ public class ControllerModels {
 		return arts;
 	}
 	
+	public String[] discs() throws SQLException, ClassNotFoundException {
+		
+		bdc.open();
+		bdc.leerDiscograficas(listaDiscograficas);;
+		bdc.close();
+		String discs[] = new String[listaDiscograficas.size()];
+		int cont = 0;
+		for(Discografica d : listaDiscograficas) {
+			discs[cont] = d.getDiscografica();
+			cont++;
+		}
+		
+		return discs;
+	}
+	
 	/* ********************************************************************************
 
 					Metodos para buscar e insertar en la BBDD
@@ -144,6 +159,14 @@ public class ControllerModels {
 		
 		bdc.open();
 		bdc.actualizar(consulta, id1, id2, columnas, fila);
+		bdc.close();
+		
+	}
+	
+	public void relacion(String tabla, String a, String b) throws ClassNotFoundException, SQLException {
+		
+		bdc.open();
+		bdc.insertar(tabla, a, b);
 		bdc.close();
 		
 	}

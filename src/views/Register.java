@@ -55,6 +55,7 @@ public class Register extends JFrame implements WindowListener, ActionListener, 
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource(cf.getIconoBlue())));
 		setResizable(false);
+		addWindowListener(this);
 		setTitle("Register Api Music");
 		
 		setBounds(100, 100, 800, 450);
@@ -285,6 +286,9 @@ public class Register extends JFrame implements WindowListener, ActionListener, 
 	@Override
 	public void windowClosing(WindowEvent e) {
 		
+		Login log = new Login();
+		log.setVisible(true);
+		
 	}
 
 	@Override
@@ -321,7 +325,7 @@ public class Register extends JFrame implements WindowListener, ActionListener, 
 		
 		Login frame = new Login();
 		frame.set(campos);
-		frame.setVisible(true); //REVISAR PARA NO CARGAR EL PROGRAMA 200 VECES
+		frame.setVisible(true);
 		
 	}
 	

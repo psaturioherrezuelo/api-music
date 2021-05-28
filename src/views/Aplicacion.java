@@ -1,39 +1,23 @@
 package views;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.sql.SQLException;
-import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import controllers.ControllerDDBB;
 import controllers.ControllerFiles;
 import controllers.ControllerModels;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-import com.mysql.cj.jdbc.exceptions.MysqlDataTruncation;
 
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
-import javax.swing.JToggleButton;
-import javax.swing.JEditorPane;
-import javax.swing.JSlider;
-import javax.swing.JPopupMenu;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
@@ -57,6 +41,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 	
 	ControllerModels cm = new ControllerModels();
 	ControllerFiles cf = new ControllerFiles();
+	private JButton btnRelacion;
 
 	public Aplicacion(String consulta) {
 		
@@ -107,6 +92,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 //	        	return cnd;
 //	        };
 	    /*}*/;
+		
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		try {
@@ -131,25 +117,30 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		selector.addItem("Artistas");
 		selector.addItem("Discograficas");
 		selector.addItem("Ceos");
-		selector.addItem("Lanzamientos");
+		selector.addItem("Relacionar");
 		selector.addItem("Contratos");
 		selector.addActionListener(this);
 		contentPane.add(selector);
 		
 		btnInsert = new JButton("Insertar");
-		btnInsert.setBounds(347, 178, 89, 23);
+		btnInsert.setBounds(290, 176, 89, 23);
 		btnInsert.addActionListener(this);
 		contentPane.add(btnInsert);
 		
 		btnUpdate = new JButton("Actualizar");
-		btnUpdate.setBounds(446, 178, 109, 23);
+		btnUpdate.setBounds(389, 176, 109, 23);
 		btnUpdate.addActionListener(this);
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Borrar");
-		btnDelete.setBounds(565, 178, 89, 23);
+		btnDelete.setBounds(629, 177, 89, 23);
 		btnDelete.addActionListener(this);
 		contentPane.add(btnDelete);
+		
+		btnRelacion = new JButton("Relacionar");
+		btnRelacion.setBounds(506, 176, 113, 23);
+		btnRelacion.addActionListener(this);
+		contentPane.add(btnRelacion);
 		
 		JLabel lblImgLogo = new JLabel("");
 		lblImgLogo.setIcon(new ImageIcon(Login.class.getResource(cf.getLogoWhite())));
@@ -161,37 +152,30 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		imgBackground2.setBounds(-514, -257, 1458, 673);
 		contentPane.add(imgBackground2);
 		
-		
-		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -218,6 +202,12 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 			dispose();
 			Insertar ins = new Insertar();
 		
+		} else if(e.getSource() == btnRelacion) {
+			
+			dispose();
+			Relacionar rel = new Relacionar();
+			rel.setVisible(true);
+			rel.setLocationRelativeTo(null);
 			
 		} else if(e.getSource() == btnDelete) {
 			
@@ -228,7 +218,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 				consulta = selector.getSelectedItem().toString();
 				id1 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 				
-				if(consulta.equalsIgnoreCase("Lanzamientos") || consulta.equalsIgnoreCase("Contratos")) {
+				if(consulta.equalsIgnoreCase("Relacionar") || consulta.equalsIgnoreCase("Contratos")) {
 					
 					id2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
 					
@@ -255,7 +245,7 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 				consulta = selector.getSelectedItem().toString();
 				id1 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 				
-				if(consulta.equalsIgnoreCase("Lanzamientos") || consulta.equalsIgnoreCase("Contratos")) {
+				if(consulta.equalsIgnoreCase("Relacionar") || consulta.equalsIgnoreCase("Contratos")) {
 					
 					id2 = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString());
 					
@@ -299,47 +289,38 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		
 	}
 	
-	
-
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+	
 	}
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 	
@@ -347,7 +328,6 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
 		
 		table.setModel(cm.tabla(consulta));
 		table.isCellEditable(1, 1);
-		
 		
 	}
 	
@@ -381,6 +361,9 @@ public class Aplicacion extends JFrame implements WindowListener, ActionListener
         	}
     		
     	}
+    	
     	return cnd;
-    }
+    
+	}
+	
 }

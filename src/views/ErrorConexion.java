@@ -5,25 +5,15 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-
 import controllers.ControllerFiles;
-import controllers.ControllerModels;
 
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Toolkit;
 
-public class ErrorConexion extends JFrame implements WindowListener, ActionListener, MouseListener {
+public class ErrorConexion extends JFrame {
 
 	private JPanel contentPane;
-	
-//	private ControllerModels controlador = new ControllerModels();
 	private ControllerFiles cf = new ControllerFiles();
 
 	public ErrorConexion(String Error) {
@@ -57,67 +47,4 @@ public class ErrorConexion extends JFrame implements WindowListener, ActionListe
 		
 	}
 	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	}
-
-	@Override
-	public void windowOpened(WindowEvent e) {
-		
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-		
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-		
-	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-		
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-		
-	}
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-		
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-		
-	}
 }
