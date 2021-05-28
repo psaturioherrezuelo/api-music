@@ -44,8 +44,14 @@ public class ErrorConexion extends JFrame implements WindowListener, ActionListe
 		JLabel lblUser = new JLabel(Error);
 		lblUser.setForeground(new Color(255, 255, 255));
 		lblUser.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUser.setBounds(0, 0, 796, 199);
+		lblUser.setBounds(94, 46, 610, 142);
 		contentPane.add(lblUser);
+		
+		JLabel lblNewLabel = new JLabel("Error de conexi\u00F3n con la Base de Datos");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(276, 30, 250, 14);
+		contentPane.add(lblNewLabel);
 		
 		this.setLocationRelativeTo(null);
 		
@@ -114,5 +120,4 @@ public class ErrorConexion extends JFrame implements WindowListener, ActionListe
 	public void windowDeactivated(WindowEvent e) {
 		
 	}
-	
 }
